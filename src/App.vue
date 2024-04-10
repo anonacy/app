@@ -36,7 +36,7 @@
               <ion-chip v-if="apikey" class="chip-note" @click="() => removeKey()">
                 <ion-icon :ios="keyOutline"></ion-icon>
                 <ion-label>
-                  Remove&nbsp;<span class="text-primary">API&nbsp;Key</span>
+                  Logout&nbsp;<span class="text-primary">API&nbsp;Key</span>
                 </ion-label>
               </ion-chip>
               <ion-chip class="chip-note">
@@ -61,7 +61,7 @@
                     <img alt="Anonacy Logo" src="./assets/favicon.png" />
                   </ion-avatar>
                   <ion-label>
-                    API Docs
+                    API&nbsp;<span class="text-primary">Documentation</span>
                   </ion-label>
                 </ion-chip>
               </a>

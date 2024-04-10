@@ -18,12 +18,18 @@
           </ion-header>
 
 
-          <ion-item>
-            <ion-input v-model="apikeyInput" label="API Key" label-placement="floating" placeholder="Enter key"></ion-input>
-            <ion-button fill="outline" size="small" shape="round" @click="() => auth()">Submit</ion-button>
-          </ion-item>
+          <form @submit.prevent="auth">
+            <ion-item>
+              <ion-input 
+                v-model="apikeyInput" 
+                label="API Key" 
+                label-placement="floating" 
+                placeholder="Enter key" 
+                autofocus></ion-input>
+              <ion-button fill="outline" size="small" shape="round" @click="() => auth()">Submit</ion-button>
+            </ion-item>
+          </form>
         </div>
-
       </ion-content>
     </ion-page>
 </template>

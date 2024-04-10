@@ -11,6 +11,7 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "deploy": "npm run build && firebase deploy",
+    "tag": "git tag $npm_package_version && git push origin $npm_package_version",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "lint": "eslint ."
