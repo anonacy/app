@@ -112,7 +112,7 @@ const router = useRouter();
 
 function removeKey() {
   rmAuth();
-  router.replace('/start'); // Redirect to /start
+  router.replace('/auth'); // Redirect to /auth
 }
 
 const appPages = [

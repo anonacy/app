@@ -8,8 +8,8 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/domains'
   },
   {
-    path: '/start',
-    component: () => import ('../views/StartPage.vue')
+    path: '/auth',
+    component: () => import ('../views/AuthPage.vue')
   },
   {
     path: '/domains',
@@ -31,8 +31,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!apikey.value && to.path !== '/start') {
-    next('/start'); // Redirect to /start
+  if (!apikey.value && to.path !== '/auth') {
+    next('/auth'); // Redirect to /auth
   } else {
     next();
   }
