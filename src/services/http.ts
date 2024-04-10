@@ -25,8 +25,12 @@ class HttpService {
     return this.http.put<T>(url, data, options);
   }
   
-  async delete<T = any>(url: string): Promise<AxiosResponse<T>> {
-    const options = { headers: { Authorization: `Bearer ${apikey.value}` } };
+  async delete<T = any>(url: string, data?: any): Promise<AxiosResponse<T>> {
+    const options = {
+      headers: { Authorization: `Bearer ${apikey.value}`},
+      params: data
+    };
+    console.log("options", options)
     return this.http.delete<T>(url, options);
   }
 

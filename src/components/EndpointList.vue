@@ -3,7 +3,7 @@
 		<div class="sticky">
 			<div class="title">{{`Endpoints (${endpoints.length})`}}</div>
 			<hr/>
-			<!-- <ion-item lines="none">
+			<ion-item lines="none">
 				<ion-label>
 				<ion-input
 					slot="start"
@@ -18,24 +18,26 @@
 					slot="end"
 					@click="add()"
 					shape="round"
-					size="small">
+					size="small"
+					:disabled="isLoading">
 						Add
 				</ion-button>
-				<ion-button 
+				<!-- <ion-button 
 					slot="end"
 					@click="edit()"
 					shape="round"
-					size="small">
+					size="small"
+					:disabled="isLoading">
 					{{ isEdit ? 'Done' : 'Edit' }}
-				</ion-button>
-			</ion-item> -->
+				</ion-button> -->
+			</ion-item>
 		</div>
 
 		<div style="display: flex; justify-content: center; width: 100%;">
 			<ion-spinner v-if="isLoading" name="dots"></ion-spinner>
 		</div>
 		
-		<ion-list>
+		<ion-list v-if="!isLoading">
 			<ion-item
 				v-for="(endpoint, index) in endpoints"
 				:key="endpoint.id"
@@ -51,12 +53,20 @@
 					</ion-input>
 					<ion-icon 
 						class="animated fadeIn faster" 
-						v-if="isEdit"
+						v-if="isEdit && !confirmDelete[index]"
 						:icon="closeCircle" 
 						slot="end" 
 						color="danger" 
-						@click="remove(index)">
+						@click="confirmDelete[index] = true">>
 					</ion-icon>
+					<ion-button 
+						v-if="isEdit && confirmDelete[index]"
+						slot="end" 
+						color="danger" 
+						shape="round"
+						@click="remove(index)">
+						Confirm
+					</ion-button>
 			</ion-item>
 		</ion-list>
 	</div>
@@ -75,11 +85,13 @@
 	import { closeCircle, flagOutline } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import HttpService from '../services/http'
+	import { isEmail } from '../services/utils'
 
 	let endpoints: Ref<any[]> = ref([]);
 	const input:Ref<string> = ref('');
 	const isEdit:Ref<boolean> = ref(false);
 	const isLoading:Ref<boolean> = ref(false);
+	const confirmDelete:Ref<boolean[]> = ref([]);
 
 
 	load();
@@ -91,25 +103,36 @@
 		isLoading.value = false;
 	}
 
-	function add() {
-		// input.value.trim()
-		// if(input.value){
-		// 	todos.value.push({
-		// 		id: Date.now(),
-		// 		created_at: Date.now(),
-		// 		name: input.value,
-		// 		completed: false
-		// 	})
-		// }
-		// input.value = ''
+	async function add() {
+		isLoading.value = true;
+		input.value.trim()
+		if(isEmail(input.value)){
+			let res:any = await HttpService.post("/endpoint", { endpoint: input.value });
+			if(res.status == 200) {
+				endpoints.value.unshift(res.data)
+			}
+		}
+		input.value = ''
+		isLoading.value = false;
 	}
 
-	function remove(i: number) {
-		// todos.value.splice(i, 1)
+	async function remove(i: number) {
+		if(confirmDelete.value[i]) {
+			isLoading.value = true;
+			let res:any = await HttpService.delete("/endpoint", { endpoint: endpoints.value[i].endpoint});
+			if(res.status == 200) {
+				endpoints.value.splice(i, 1)
+				confirmDelete.value[i] = false;
+			}
+			isLoading.value = false;
+		} else {
+			confirmDelete.value[i] = true;
+		}
 	}
 
 	function edit() {
 		isEdit.value = !isEdit.value;
+		confirmDelete.value.fill(false);
 	}
 </script>
 
