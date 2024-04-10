@@ -119,7 +119,8 @@
 				:alias="alias"
 				:index="index"
 				:editing="editing"
-				@remove="remove">
+				@remove="remove"
+				@toggle="toggle">
 			 </AliasItem>
 		</ion-list>
 		
@@ -181,7 +182,7 @@
 	}
 
 	async function addDomain() {
-		const loadingCtrl = await loadingController.create({spinner: "dots"});
+		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});
 		try {
 			domainInput.value.trim()
 			if(isDomainName(domainInput.value)){
@@ -202,7 +203,7 @@
 	}
 
 	async function addAlias() {
-		const loadingCtrl = await loadingController.create({spinner: "dots"});
+		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});
 		try {
 			aliasInput.value.trim()
 			endpointInput.value.trim()
@@ -226,15 +227,38 @@
 	}
 
 	async function remove(i: number) {
-		const loadingCtrl = await loadingController.create({spinner: "dots"});
-		await loadingCtrl.present();
-		const body = { [type.value]: items.value[i][type.value] }
-		const res:any = await HttpService.delete(`/${type.value}`, body);
-		if(res.status == 200) {
-			items.value.splice(i, 1)
-			confirmDelete.value[i] = false;
+		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});
+		try {
+			await loadingCtrl.present();
+			const body = { [type.value]: items.value[i][type.value] }
+			const res:any = await HttpService.delete(`/${type.value}`, body);
+			if(res.status == 200) {
+				items.value.splice(i, 1)
+				confirmDelete.value[i] = false;
+			}
+			loadingCtrl.dismiss();
+		} catch (e:any) {
+			console.log("e.message: ", e.message);
+			loadingCtrl.dismiss();
 		}
-		loadingCtrl.dismiss();
+
+	}
+
+	async function toggle(i: number) {
+		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});
+		try {
+			await loadingCtrl.present();
+			const body = { alias: items.value[i].alias, enabled: !items.value[i].enabled }
+			const res:any = await HttpService.put(`/alias`, body);
+			if(res.status == 200) {
+				items.value[i].enabled = !items.value[i].enabled;
+			}
+			loadingCtrl.dismiss();
+		} catch (e:any) {
+			console.log("e.message: ", e.message);
+			loadingCtrl.dismiss();
+		}
+
 	}
 
 	function edit() {

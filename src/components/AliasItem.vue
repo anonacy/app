@@ -9,7 +9,8 @@
 				:checked="props.alias.enabled"
 				v-model="props.alias.enabled"
 				disabled
-				slot="start">
+				slot="start"
+				@click="toggle()">
 			</ion-toggle>
 			<ion-label class="no-disable">
 				<h2>{{ props.alias.alias }}</h2>
@@ -68,7 +69,7 @@
 	import { defineEmits } from 'vue';
 
 	const props = defineProps(['alias', 'index', 'editing']);
-	const emit = defineEmits(['remove']);
+	const emit = defineEmits(['remove', 'toggle']);
 
 	const confirmDelete: Ref<boolean> = ref(false);
 
@@ -83,6 +84,10 @@
 
 	function cancel() {
 		confirmDelete.value = false;
+	}
+
+	function toggle() {
+		emit('toggle', props.index);
 	}
 
 </script>
