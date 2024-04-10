@@ -2,7 +2,7 @@
   <ion-page>
     <ion-content :fullscreen="true">
       <div id="small-container animated fadeIn faster">
-        <AliasList></AliasList>
+        <List :type="path"></List>
       </div>
     </ion-content>
   </ion-page>
@@ -10,7 +10,11 @@
 
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
-import AliasList from '../components/AliasList.vue';
+import List from '../components/List.vue';
+import { unpluralize } from '../services/utils';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const path = unpluralize(route.path.substring(1)); // no plural, remove "/" from start
 </script>
 
 <style scoped>

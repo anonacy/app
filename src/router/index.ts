@@ -13,15 +13,15 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/domains',
-    component: () => import ('../views/DomainsPage.vue')
+    component: () => import ('../views/ListPage.vue')
   },
 	{
     path: '/endpoints',
-    component: () => import ('../views/EndpointsPage.vue')
+    component: () => import ('../views/ListPage.vue')
   },
 	{
     path: '/aliases',
-    component: () => import ('../views/AliasesPage.vue')
+    component: () => import ('../views/ListPage.vue')
   }
 ]
 

@@ -1,8 +1,7 @@
 <template>
 	<div class="small-container">
 		<div class="sticky">
-			<div class="title">{{`Endpoints (${endpoints.length})`}}</div>
-			<hr/>
+			<div class="title">{{`${capitalize(pluralize(type))} (${items.length})`}}</div>
 			<ion-item lines="none">
 				<ion-label>
 				<ion-input
@@ -10,7 +9,7 @@
 					aria-label="Todo"
 					v-model="input"
 					autofocus
-					placeholder="Add a endpoint..."
+					:placeholder="`Add ${type}...`"
 					@keyup.enter="add" >
 				</ion-input>
 			</ion-label>
@@ -31,43 +30,35 @@
 					{{ isEdit ? 'Done' : 'Edit' }}
 				</ion-button> -->
 			</ion-item>
+			<hr/>
 		</div>
 
 		<div style="display: flex; justify-content: center; width: 100%;">
 			<ion-spinner v-if="isLoading" name="dots"></ion-spinner>
 		</div>
 		
-		<ion-list v-if="!isLoading">
-			<ion-item
-				v-for="(endpoint, index) in endpoints"
-				:key="endpoint.id"
-				lines="none"
-				class="animated fadeIn faster">
-					<ion-icon 
-						color="primary"
-						:ios="flagOutline">
-					</ion-icon>
-					<ion-input 
-						v-model="endpoint.endpoint"
-						value="endpoint.name">
-					</ion-input>
-					<ion-icon 
-						class="animated fadeIn faster" 
-						v-if="isEdit && !confirmDelete[index]"
-						:icon="closeCircle" 
-						slot="end" 
-						color="danger" 
-						@click="confirmDelete[index] = true">>
-					</ion-icon>
-					<ion-button 
-						v-if="isEdit && confirmDelete[index]"
-						slot="end" 
-						color="danger" 
-						shape="round"
-						@click="remove(index)">
-						Confirm
-					</ion-button>
-			</ion-item>
+		<ion-list v-if="!isLoading && type == 'domain'">
+			<DomainItem v-for="(domain, index) in items"
+				:key="domain.domain"
+				:domain="domain"
+				:index="index">
+			 </DomainItem>
+		</ion-list>
+		
+		<ion-list v-if="!isLoading && type == 'alias'">
+			<AliasItem v-for="(alias, index) in items"
+				:key="alias.alias"
+				:alias="alias"
+				:index="index">
+			 </AliasItem>
+		</ion-list>
+		
+		<ion-list v-if="!isLoading && type == 'endpoint'">
+			<EndpointItem v-for="(endpoint, index) in items"
+				:key="endpoint.endpoint"
+				:endpoint="endpoint"
+				:index="index">
+			 </EndpointItem>
 		</ion-list>
 	</div>
 </template>
@@ -82,24 +73,27 @@
 		IonIcon, 
 		IonSpinner
 	} from '@ionic/vue';
-	import { closeCircle, flagOutline } from 'ionicons/icons';
+	// import { } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import HttpService from '../services/http'
-	import { isEmail } from '../services/utils'
+	import { isEmail, pluralize, capitalize } from '../services/utils'
+	import AliasItem from './AliasItem.vue';
+	import EndpointItem from './EndpointItem.vue';
+	import DomainItem from './DomainItem.vue';
 
-	let endpoints: Ref<any[]> = ref([]);
+	const items: Ref<any[]> = ref([]);
 	const input:Ref<string> = ref('');
 	const isEdit:Ref<boolean> = ref(false);
 	const isLoading:Ref<boolean> = ref(false);
 	const confirmDelete:Ref<boolean[]> = ref([]);
-
-
+	const props = defineProps(['type']); // can be 'domain', 'endpoint', 'alias'
+	const type:Ref<string> = ref(props.type);
 	load();
 
 	async function load() {
 		isLoading.value = true;
-		let res:any = await HttpService.get("/endpoints");
-		endpoints.value = res.data;
+		let res:any = await HttpService.get(`/${pluralize(type.value)}`);
+		items.value = res.data;
 		isLoading.value = false;
 	}
 
@@ -107,9 +101,9 @@
 		isLoading.value = true;
 		input.value.trim()
 		if(isEmail(input.value)){
-			let res:any = await HttpService.post("/endpoint", { endpoint: input.value });
+			let res:any = await HttpService.post(`/${type.value}`, { [type.value]: input.value });
 			if(res.status == 200) {
-				endpoints.value.unshift(res.data)
+				items.value.unshift(res.data)
 			}
 		}
 		input.value = ''
@@ -119,9 +113,10 @@
 	async function remove(i: number) {
 		if(confirmDelete.value[i]) {
 			isLoading.value = true;
-			let res:any = await HttpService.delete("/endpoint", { endpoint: endpoints.value[i].endpoint});
+			let body = { [type.value]: items.value[i][type.value] }
+			let res:any = await HttpService.delete(`/${type.value}`, { [type.value]: items.value[i].endpoint});
 			if(res.status == 200) {
-				endpoints.value.splice(i, 1)
+				items.value.splice(i, 1)
 				confirmDelete.value[i] = false;
 			}
 			isLoading.value = false;
@@ -139,10 +134,6 @@
 <style scoped>
 	ion-item {
 		--background-hover-opacity: 0;
-	}
-
-	ion-icon {
-		margin-right: 10px !important;
 	}
 </style>
 ../state/state
