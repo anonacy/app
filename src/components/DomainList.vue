@@ -60,7 +60,7 @@
 import { IonInput, IonList, IonItem, IonLabel, IonCheckbox, IonButton, IonIcon } from '@ionic/vue';
 import { closeCircle } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
-	import ApiKey from '../state/apikey'
+	import { apikey } from '../state/state'
 
 	let domains: any[] = [];
 	const input:Ref<string> = ref('');
@@ -93,3 +93,4 @@ import { closeCircle } from 'ionicons/icons';
 		--background-hover-opacity: 0;
 	}
 </style>
+../state/state

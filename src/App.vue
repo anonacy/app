@@ -2,7 +2,7 @@
   <ion-app>
     <ion-split-pane content-id="main-content">
       <ion-menu content-id="main-content" type="reveal">
-        <ion-content>
+        <ion-content class="ion-padding">
           <ion-list id="inbox-list">
             <!-- <div v-if="isLoggedIn">
               <ion-list-header>{{ user.name }}</ion-list-header>
@@ -28,6 +28,13 @@
                   <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
+
+            <ion-input>
+              <ion-label>API Key</ion-label>
+              <ion-input v-model="apikeyInput" placeholder="API Key"></ion-input>
+              <ion-button fill="outline" size="small" @click="() => setApiKey(apikeyInput)">Save</ion-button>
+            </ion-input>
+
           </ion-list>
         </ion-content>
       </ion-menu>
@@ -50,7 +57,8 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
-  IonButton
+  IonButton,
+  IonInput
 } from '@ionic/vue';
 import { ref } from 'vue';
 import {
@@ -62,10 +70,8 @@ import {
   flagSharp
 } from 'ionicons/icons';
 import { mdTransitionAnimation } from '@ionic/core'
-import ApiKey from './state/apikey';
-
-const apikeyInstance = ApiKey.getInstance();
-const apikey = apikeyInstance.apikey;
+import { apikey, setApiKey } from './state/state';
+let apikeyInput = ref("");
 
 const selectedIndex = ref(0);
 const appPages = [
@@ -215,3 +221,4 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 </style>
+./state/state
