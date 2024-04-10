@@ -2,7 +2,8 @@
 	<div class="small-container">
 		<div class="sticky">
 			<div class="title">{{`Endpoints (${endpoints.length})`}}</div>
-			<ion-item lines="none">
+			<hr/>
+			<!-- <ion-item lines="none">
 				<ion-label>
 				<ion-input
 					slot="start"
@@ -27,7 +28,7 @@
 					size="small">
 					{{ isEdit ? 'Done' : 'Edit' }}
 				</ion-button>
-			</ion-item>
+			</ion-item> -->
 		</div>
 
 		<div style="display: flex; justify-content: center; width: 100%;">
@@ -62,11 +63,16 @@
 </template>
 
 <script setup lang="ts">
-import { IonInput, IonList, IonItem, IonLabel, IonCheckbox, IonButton, IonIcon, IonText, IonSpinner } from '@ionic/vue';
-import {
-  flagOutline
-} from 'ionicons/icons';
-import { closeCircle } from 'ionicons/icons';
+	import { 
+		IonInput, 
+		IonList, 
+		IonItem, 
+		IonLabel, 
+		IonButton, 
+		IonIcon, 
+		IonSpinner
+	} from '@ionic/vue';
+	import { closeCircle, flagOutline } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import HttpService from '../services/http'
 
@@ -110,6 +116,10 @@ import { closeCircle } from 'ionicons/icons';
 <style scoped>
 	ion-item {
 		--background-hover-opacity: 0;
+	}
+
+	ion-icon {
+		margin-right: 10px !important;
 	}
 </style>
 ../state/state

@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'anonacy-vue',
+  appId: 'com.anonacy.app',
+  appName: '@anonacy/app',
   webDir: 'dist',
   server: {
     androidScheme: 'https'

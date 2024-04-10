@@ -1,6 +1,7 @@
 .small-container {
 	width: 700px;
 	max-width: 100%;
+	margin-inline: 30px;
 }
 
 .sticky {
@@ -14,6 +15,40 @@
 	margin: auto;
 }
 
-.margin-auto {
-	margin: auto;
+.no-select {
+	user-select: none;
+}
+
+.no-disable {
+	opacity: 1 !important;
+}
+
+.flip-vertically {
+  transform: scaleY(-1);
+}
+
+.chip-note {
+	min-width: 200px;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bottom-block {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+}
+
+hr {
+	border: none;
+	border-bottom: 3px solid rgba(255,255,255,0.2);
+	margin: 10px 0;
+}
+
+.split-pane-side {
+	min-width: 300px;
+	border: none;
 }

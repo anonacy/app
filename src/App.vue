@@ -1,12 +1,14 @@
 <template>
   <ion-app>
     <ion-split-pane content-id="main-content">
-      <ion-menu content-id="main-content" type="reveal">
+      <ion-menu content-id="main-content" type="reveal" class="no-select">
         <ion-content class="ion-padding">
-          <ion-list id="inbox-list">
-            <div v-if="apikey">
+          <ion-list v-if="apikey" id="inbox-list">
+
+            <div class="monospace underline">
               <ion-list-header>{{ org }}</ion-list-header>
               <ion-note>{{ server }}</ion-note>
+              <hr/>
             </div>
 
             <ion-menu-toggle 
@@ -25,11 +27,49 @@
                     :ios="p.iosIcon" 
                     :md="p.mdIcon">
                   </ion-icon>
-                  <ion-label>{{ p.title }}</ion-label>
+                  <ion-label class="monospace">{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-
           </ion-list>
+
+          <div class="monospace bottom-block">
+              <ion-chip v-if="apikey" class="chip-note" @click="() => removeKey()">
+                <ion-icon :ios="keyOutline"></ion-icon>
+                <ion-label>
+                  Remove&nbsp;<span class="text-primary">API&nbsp;Key</span>
+                </ion-label>
+              </ion-chip>
+              <ion-chip class="chip-note">
+                <ion-avatar>
+                  <img alt="Anonacy Logo" src="./assets/favicon.png" />
+                </ion-avatar>
+                <ion-label>
+                  @anonacy/app&nbsp;<span class="text-primary">v{{ version }}</span>
+                </ion-label>
+              </ion-chip>
+              <ion-chip class="chip-note" >
+                <ion-avatar>
+                  <img alt="Anonacy Logo" src="./assets/favicon.png" />
+                </ion-avatar>
+                <ion-label>
+                  @anonacy/api&nbsp;<span class="text-primary" v-if="apiversion">v{{ apiversion }}</span>
+                </ion-label>
+              </ion-chip>
+              <a class="monospace" target="_blank" href="https://api2.anonacy.com/docs/">
+                <ion-chip class="chip-note" >
+                  <ion-avatar>
+                    <img alt="Anonacy Logo" src="./assets/favicon.png" />
+                  </ion-avatar>
+                  <ion-label>
+                    API Docs
+                  </ion-label>
+                </ion-chip>
+              </a>
+
+              <!-- <a class="monospace" target="_blank" href="https://github.com/hewham/anonacy-puppet">
+                <span class="text-primary">View Source Code</span>
+              </a> -->
+            </div>
         </ion-content>
       </ion-menu>
       <ion-router-outlet id="main-content" :animation="mdTransitionAnimation"></ion-router-outlet>
@@ -51,8 +91,9 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
-  IonText,
-  IonInput
+  IonButton,
+  IonChip,
+  IonAvatar
 } from '@ionic/vue';
 import {
   mailOutline,
@@ -60,14 +101,20 @@ import {
   globeOutline,
   globeSharp,
   flagOutline,
-  flagSharp
+  flagSharp,
+  keyOutline
 } from 'ionicons/icons';
-import { ref } from 'vue';
 import { mdTransitionAnimation } from '@ionic/core'
+import { version } from '../package.json';
+import { useRouter } from 'vue-router';
+import { apikey, rmAuth, org, server, apiversion } from './state/state';
+const router = useRouter();
 
-import { apikey, org, server } from './state/state';
+function removeKey() {
+  rmAuth();
+  router.replace('/start'); // Redirect to /start
+}
 
-const selectedIndex = ref(0);
 const appPages = [
   {
     title: 'Domains',
@@ -213,6 +260,6 @@ ion-note {
 
 ion-item.selected {
   --color: var(--ion-color-primary);
+  text-decoration: underline;
 }
 </style>
-./state/state

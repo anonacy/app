@@ -2,7 +2,8 @@
 	<div class="small-container">
 		<div class="sticky">
 			<div class="title">{{`Aliases (${aliases.length})`}}</div>
-			<ion-item lines="none">
+			<hr/>
+			<!-- <ion-item lines="none">
 				<ion-label>
 				<ion-input
 					slot="start"
@@ -27,7 +28,7 @@
 					size="small">
 					{{ isEdit ? 'Done' : 'Edit' }}
 				</ion-button>
-			</ion-item>
+			</ion-item> -->
 		</div>
 
 
@@ -41,17 +42,25 @@
 				:key="alias.id"
 				lines="none"
 				class="animated fadeIn faster">
-					<ion-checkbox 
+					<ion-toggle 
 						mode="md"
 						:checked="alias.enabled"
 						v-model="alias.enabled"
-						slot="start"
-						disabled>
-					</ion-checkbox>
-					<ion-input 
-						v-model="alias.alias"
-						value="alias.name">
-					</ion-input>
+						disabled
+						slot="start">
+					</ion-toggle>
+					<ion-label class="no-disable">
+						<h2>{{ alias.alias }}</h2>
+						<p>
+							&nbsp;
+							<ion-icon 
+								:ios="alias.enabled ? arrowRedo : arrowRedoOutline" 
+								:color="alias.enabled ? 'primary' : 'medium'"
+								class="flip-vertically">
+							</ion-icon>
+							&nbsp;{{  alias.endpoint }}
+						</p>
+					</ion-label>
 					<ion-icon 
 						class="animated fadeIn faster" 
 						v-if="isEdit"
@@ -66,8 +75,18 @@
 </template>
 
 <script setup lang="ts">
-import { IonInput, IonList, IonItem, IonLabel, IonCheckbox, IonButton, IonIcon, IonHeader,  IonToolbar, IonTitle, IonSpinner } from '@ionic/vue';
-import { closeCircle } from 'ionicons/icons';
+	import { 
+		IonInput, 
+		IonList, 
+		IonItem, 
+		IonLabel, 
+		IonButton, 
+		IonIcon, 
+		IonSpinner, 
+		IonToggle,
+		IonCheckbox
+	} from '@ionic/vue';
+	import { closeCircle, flagOutline, arrowRedoOutline, arrowRedo } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import HttpService from '../services/http'
 

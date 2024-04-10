@@ -2,7 +2,8 @@
 	<div class="small-container">
 		<div class="sticky">
 			<div class="title">{{`Domains (${domains.length})`}}</div>
-			<ion-item lines="none">
+			<hr/>
+			<!-- <ion-item lines="none">
 				<ion-label>
 				<ion-input
 					slot="start"
@@ -27,7 +28,7 @@
 					size="small">
 					{{ isEdit ? 'Cancel' : 'Edit' }}
 				</ion-button>
-			</ion-item>
+			</ion-item> -->
 		</div>
 
 		<div style="display: flex; justify-content: center; width: 100%;">
@@ -47,10 +48,9 @@
 						slot="start"
 						disabled>
 					</ion-checkbox>
-					<ion-input 
-						v-model="domain.domain"
-						value="domain.name">
-					</ion-input>
+					<ion-label class="no-disable">
+							{{ domain.domain }}
+					</ion-label>
 					<ion-icon 
 						class="animated fadeIn faster" 
 						v-if="isEdit && !confirmDelete[index]"
@@ -73,8 +73,17 @@
 </template>
 
 <script setup lang="ts">
-import { IonInput, IonList, IonItem, IonLabel, IonCheckbox, IonButton, IonIcon, IonText, IonSpinner } from '@ionic/vue';
-import { closeCircle } from 'ionicons/icons';
+	import { 
+		IonInput, 
+		IonList, 
+		IonItem, 
+		IonLabel, 
+		IonCheckbox, 
+		IonButton, 
+		IonIcon, 
+		IonSpinner
+	} from '@ionic/vue';
+	import { closeCircle } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import HttpService from '../services/http'
 

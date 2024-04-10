@@ -17,16 +17,11 @@
             </ion-toolbar>
           </ion-header>
 
-          <ion-card class="ion-padding">
-            <ion-text>
-              Enter in your API Key below:
-            </ion-text>
-            <ion-input>
-              <ion-label>API Key</ion-label>
-              <ion-input v-model="apikeyInput" placeholder="API Key"></ion-input>
-              <ion-button fill="outline" size="small" @click="() => auth()">Save</ion-button>
-            </ion-input>
-          </ion-card>
+
+          <ion-item>
+            <ion-input v-model="apikeyInput" label="API Key" label-placement="floating" placeholder="Enter key"></ion-input>
+            <ion-button fill="outline" size="small" shape="round" @click="() => auth()">Submit</ion-button>
+          </ion-item>
         </div>
 
       </ion-content>
@@ -34,22 +29,22 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonLabel, IonInput, IonButton, IonCard, IonText } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonInput, IonButton, IonCard, IonText } from '@ionic/vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
 import HttpService from '../services/http';
 import { error } from '../services/dialog';
 import { apikey, setAuth } from '../state/state';
-let apikeyInput = ref(apikey.value);
 
+let apikeyInput = ref(apikey.value);
 const router = useRouter();
 
 async function auth() {
   try {
     let res: any = (await HttpService.auth(apikeyInput.value)).data;
-    setAuth(apikeyInput.value, res.org, res.server, res.orgID, res.serverID);
+    setAuth(apikeyInput.value, res.org, res.server, res.orgID, res.serverID, res.version);
     router.push('/domains'); // Redirect to /domains
+    apikeyInput.value = '';
   } catch (err) {
     error("Invalid API Key, please try again.");
   }
