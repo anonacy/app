@@ -1,36 +1,53 @@
 <template>
 	<ion-item
-		:key="alias.alias"
+		:key="props.alias.alias"
 		lines="none"
 		class="animated fadeIn faster">
 			<ion-toggle 
 				mode="md"
 				aria-label="toggle alias"
-				:checked="alias.enabled"
-				v-model="alias.enabled"
+				:checked="props.alias.enabled"
+				v-model="props.alias.enabled"
 				disabled
 				slot="start">
 			</ion-toggle>
 			<ion-label class="no-disable">
-				<h2>{{ alias.alias }}</h2>
+				<h2>{{ props.alias.alias }}</h2>
 				<p>
 					&nbsp;
 					<ion-icon 
-						:ios="alias.enabled ? arrowRedo : arrowRedoOutline" 
-						:color="alias.enabled ? 'primary' : 'medium'"
+						:ios="props.alias.enabled ? arrowRedo : arrowRedoOutline" 
+						:color="props.alias.enabled ? 'primary' : 'medium'"
 						class="flip-vertically">
 					</ion-icon>
-					&nbsp;{{  alias.endpoint }}
+					&nbsp;{{  props.alias.endpoint }}
 				</p>
 			</ion-label>
 			<ion-icon 
 				class="animated fadeIn faster" 
-				v-if="isEdit"
+				v-if="props.editing && !confirmDelete"
 				:icon="closeCircle" 
 				slot="end" 
 				color="danger" 
-				@click="remove(index)">
+				@click="confirmDelete = true">>
 			</ion-icon>
+			<ion-button 
+				v-if="props.editing && confirmDelete"
+				slot="end" 
+				color="medium" 
+				shape="round"
+				fill="outline"
+				@click="cancel()">
+				Cancel
+			</ion-button>
+			<ion-button 
+				v-if="props.editing && confirmDelete"
+				slot="end" 
+				color="danger" 
+				shape="round"
+				@click="remove()">
+				Confirm
+			</ion-button>
 	</ion-item>
 </template>
 
@@ -48,21 +65,26 @@
 	} from '@ionic/vue';
 	import { closeCircle, flagOutline, arrowRedoOutline, arrowRedo } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
+	import { defineEmits } from 'vue';
 
-	const props = defineProps(['alias', 'index']);
+	const props = defineProps(['alias', 'index', 'editing']);
+	const emit = defineEmits(['remove']);
 
-	const alias = props.alias
-	const index = props.index
-	const isEdit:Ref<boolean> = ref(false);
+	const confirmDelete: Ref<boolean> = ref(false);
 
 
-	function remove(i: number) {
-		// todos.value.splice(i, 1)
+	function remove() {
+		if(confirmDelete.value) {
+			emit('remove', props.index);
+		} else {
+			confirmDelete.value = true;
+		}
+	};
+
+	function cancel() {
+		confirmDelete.value = false;
 	}
 
-	function edit() {
-		isEdit.value = !isEdit.value;
-	}
 </script>
 
 <style scoped>

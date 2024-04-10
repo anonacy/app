@@ -11,7 +11,9 @@ class HttpService {
   });
 
   async get<T = any>(url: string): Promise<AxiosResponse<T>> {
-    const options = { headers: { Authorization: `Bearer ${apikey.value}` } };
+    const options = { 
+      headers: { Authorization: `Bearer ${apikey.value}` } 
+    };
     return this.http.get<T>(url, options);
   }
   
@@ -30,7 +32,6 @@ class HttpService {
       headers: { Authorization: `Bearer ${apikey.value}`},
       params: data
     };
-    console.log("options", options)
     return this.http.delete<T>(url, options);
   }
 

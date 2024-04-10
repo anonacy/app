@@ -83,7 +83,7 @@
 								size="small"
 								fill="solid"
 								:disabled="loading">
-									{{ isEdit ? 'Done' : 'Edit' }}
+									{{ editing ? 'Done' : 'Edit' }}
 							</ion-button>
 							<ion-button
 								fill="solid"
@@ -117,7 +117,9 @@
 			<AliasItem v-for="(alias, index) in items"
 				:key="alias.alias"
 				:alias="alias"
-				:index="index">
+				:index="index"
+				:editing="editing"
+				@remove="remove">
 			 </AliasItem>
 		</ion-list>
 		
@@ -142,7 +144,8 @@
 		IonSpinner,
 		IonGrid,
 		IonRow,
-		IonCol
+		IonCol,
+		loadingController
 	} from '@ionic/vue';
 	import { refreshOutline } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
@@ -156,7 +159,7 @@
 	const domainInput:Ref<string> = ref('');
 	const aliasInput:Ref<string> = ref('');
 	const endpointInput:Ref<string> = ref('');
-	const isEdit:Ref<boolean> = ref(false);
+	const editing:Ref<boolean> = ref(false);
 	const loading:Ref<boolean> = ref(false);
 	const confirmDelete:Ref<boolean[]> = ref([]);
 	const props = defineProps(['type']); // can be 'domain', 'endpoint', 'alias'
@@ -170,70 +173,72 @@
 	}
 
 	async function add() {
-		loading.value = true;
 		if(type.value == 'domain') {
 			await addDomain();
 		} else if(type.value == 'alias') {
 			await addAlias();
 		}
-		loading.value = false;
 	}
 
 	async function addDomain() {
+		const loadingCtrl = await loadingController.create({spinner: "dots"});
 		try {
 			domainInput.value.trim()
 			if(isDomainName(domainInput.value)){
+				await loadingCtrl.present();
 				let res:any = await HttpService.post(`/domain`, { domain: domainInput.value });
 				if(res.status == 200) {
 					items.value.unshift(res.data)
 				}
+				loadingCtrl.dismiss();	
 			} else {
 				return;
 			}
 			domainInput.value = '';
 		}catch (e:any) {
 			console.log("e.message: ", e.message);	
+			loadingCtrl.dismiss();	
 		}
 	}
 
 	async function addAlias() {
+		const loadingCtrl = await loadingController.create({spinner: "dots"});
 		try {
 			aliasInput.value.trim()
 			endpointInput.value.trim()
 			if(isEmail(aliasInput.value) && isEmail(endpointInput.value)){
+				await loadingCtrl.present();
 				const body = { alias: aliasInput.value, endpoint: endpointInput.value }
 				let res:any = await HttpService.post(`/alias`, body);
-				console.log("res: ", res);
 				if(res.status == 200) {
 					items.value.unshift(res.data);
 				}
+				loadingCtrl.dismiss();	
 			} else {
 				return;
 			}
 			aliasInput.value = '';
 			endpointInput.value = '';
 		} catch (e:any) {
-			console.log("e.message: ", e.message);	
+			console.log("e.message: ", e.message);
+			loadingCtrl.dismiss();	
 		}
 	}
 
 	async function remove(i: number) {
-		if(confirmDelete.value[i]) {
-			loading.value = true;
-			let body = { [type.value]: items.value[i][type.value] }
-			let res:any = await HttpService.delete(`/${type.value}`, { [type.value]: items.value[i].endpoint});
-			if(res.status == 200) {
-				items.value.splice(i, 1)
-				confirmDelete.value[i] = false;
-			}
-			loading.value = false;
-		} else {
-			confirmDelete.value[i] = true;
+		const loadingCtrl = await loadingController.create({spinner: "dots"});
+		await loadingCtrl.present();
+		const body = { [type.value]: items.value[i][type.value] }
+		const res:any = await HttpService.delete(`/${type.value}`, body);
+		if(res.status == 200) {
+			items.value.splice(i, 1)
+			confirmDelete.value[i] = false;
 		}
+		loadingCtrl.dismiss();
 	}
 
 	function edit() {
-		isEdit.value = !isEdit.value;
+		editing.value = !editing.value;
 		confirmDelete.value.fill(false);
 	}
 </script>
