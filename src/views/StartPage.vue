@@ -25,6 +25,7 @@
                 label="API Key" 
                 label-placement="floating" 
                 placeholder="Enter key" 
+                type="password"
                 autofocus></ion-input>
               <ion-button fill="outline" size="small" shape="round" @click="() => auth()">Submit</ion-button>
             </ion-item>

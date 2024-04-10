@@ -8,7 +8,6 @@
 				aria-label="toggle alias"
 				:checked="props.alias.enabled"
 				v-model="props.alias.enabled"
-				disabled
 				slot="start"
 				@click="toggle()">
 			</ion-toggle>

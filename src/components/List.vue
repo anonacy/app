@@ -248,10 +248,10 @@
 		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});
 		try {
 			await loadingCtrl.present();
-			const body = { alias: items.value[i].alias, enabled: !items.value[i].enabled }
+			const body = { alias: items.value[i].alias, enabled: items.value[i].enabled }
 			const res:any = await HttpService.put(`/alias`, body);
 			if(res.status == 200) {
-				items.value[i].enabled = !items.value[i].enabled;
+				items.value[i].enabled = items.value[i].enabled;
 			}
 			loadingCtrl.dismiss();
 		} catch (e:any) {
