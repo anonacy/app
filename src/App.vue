@@ -4,10 +4,10 @@
       <ion-menu content-id="main-content" type="reveal">
         <ion-content class="ion-padding">
           <ion-list id="inbox-list">
-            <!-- <div v-if="isLoggedIn">
-              <ion-list-header>{{ user.name }}</ion-list-header>
-              <ion-note>{{ user.email }}</ion-note>
-            </div> -->
+            <div v-if="apikey">
+              <ion-list-header>{{ org }}</ion-list-header>
+              <ion-note>{{ server }}</ion-note>
+            </div>
 
             <ion-menu-toggle 
               :auto-hide="false" v-for="(p, i) in appPages"
@@ -28,12 +28,6 @@
                   <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-
-            <ion-input>
-              <ion-label>API Key</ion-label>
-              <ion-input v-model="apikeyInput" placeholder="API Key"></ion-input>
-              <ion-button fill="outline" size="small" @click="() => setApiKey(apikeyInput)">Save</ion-button>
-            </ion-input>
 
           </ion-list>
         </ion-content>
@@ -57,10 +51,9 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
-  IonButton,
+  IonText,
   IonInput
 } from '@ionic/vue';
-import { ref } from 'vue';
 import {
   mailOutline,
   mailSharp,
@@ -69,9 +62,10 @@ import {
   flagOutline,
   flagSharp
 } from 'ionicons/icons';
+import { ref } from 'vue';
 import { mdTransitionAnimation } from '@ionic/core'
-import { apikey, setApiKey } from './state/state';
-let apikeyInput = ref("");
+
+import { apikey, org, server } from './state/state';
 
 const selectedIndex = ref(0);
 const appPages = [

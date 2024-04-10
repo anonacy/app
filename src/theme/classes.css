@@ -1,6 +1,10 @@
 .small-container {
-	width: 400px;
+	width: 700px;
 	max-width: 100%;
+}
+
+.center {
+	margin: auto;
 }
 
 .margin-auto {

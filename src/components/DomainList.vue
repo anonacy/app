@@ -18,15 +18,12 @@
 				size="small">
 					Add
 			</ion-button>
-			<!-- <ion-button 
-				slot="end"
-				@click="edit()"
-				shape="round"
-				size="small">
-					{{ isEdit ? 'Done' : 'Edit' }}
-			</ion-button> -->
 		</ion-item>
 
+		<div style="display: flex; justify-content: center; width: 100%;">
+			<ion-spinner v-if="isLoading" name="dots"></ion-spinner>
+		</div>
+		
 		<ion-list>
 			<ion-item
 				v-for="(domain, index) in domains"
@@ -35,17 +32,17 @@
 				class="animated fadeIn faster">
 					<ion-checkbox 
 						mode="md"
-						:checked="domain.completed"
-						v-model="domain.completed"
-						slot="start">
+						:checked="domain.dns.ok"
+						v-model="domain.dns.ok"
+						slot="start"
+						disabled>
 					</ion-checkbox>
 					<ion-input 
-						v-model="domain.name"
+						v-model="domain.domain"
 						value="domain.name">
 					</ion-input>
 					<ion-icon 
 						class="animated fadeIn faster" 
-						v-if="isEdit" 
 						:icon="closeCircle" 
 						slot="end" 
 						color="danger" 
@@ -57,14 +54,25 @@
 </template>
 
 <script setup lang="ts">
-import { IonInput, IonList, IonItem, IonLabel, IonCheckbox, IonButton, IonIcon } from '@ionic/vue';
+import { IonInput, IonList, IonItem, IonLabel, IonCheckbox, IonButton, IonIcon, IonText, IonSpinner } from '@ionic/vue';
 import { closeCircle } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
-	import { apikey } from '../state/state'
+	import HttpService from '../services/http'
 
-	let domains: any[] = [];
+	let domains: Ref<any[]> = ref([]);
 	const input:Ref<string> = ref('');
 	const isEdit:Ref<boolean> = ref(false);
+	const isLoading:Ref<boolean> = ref(false);
+
+
+	load();
+
+	async function load() {
+		isLoading.value = true;
+		let res:any = await HttpService.get("/domains");
+		domains.value = res.data;
+		isLoading.value = false;
+	}
 
 	function add() {
 		// input.value.trim()
