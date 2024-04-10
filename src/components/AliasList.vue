@@ -7,7 +7,7 @@
 				aria-label="Todo"
 				v-model="input"
 				autofocus
-				placeholder="Add a domain..."
+				placeholder="Add a alias..."
 				@keyup.enter="add" >
 			</ion-input>
 		</ion-label>
@@ -23,7 +23,7 @@
 				@click="edit()"
 				shape="round"
 				size="small">
-				{{ isEdit ? 'Cancel' : 'Edit' }}
+				{{ isEdit ? 'Done' : 'Edit' }}
 			</ion-button>
 		</ion-item>
 
@@ -33,37 +33,29 @@
 		
 		<ion-list>
 			<ion-item
-				v-for="(domain, index) in domains"
-				:key="domain.id"
+				v-for="(alias, index) in aliases"
+				:key="alias.id"
 				lines="none"
 				class="animated fadeIn faster">
 					<ion-checkbox 
 						mode="md"
-						:checked="domain.dns.ok"
-						v-model="domain.dns.ok"
+						:checked="alias.enabled"
+						v-model="alias.enabled"
 						slot="start"
 						disabled>
 					</ion-checkbox>
 					<ion-input 
-						v-model="domain.domain"
-						value="domain.name">
+						v-model="alias.alias"
+						value="alias.name">
 					</ion-input>
 					<ion-icon 
 						class="animated fadeIn faster" 
-						v-if="isEdit && !confirmDelete[index]"
+						v-if="isEdit"
 						:icon="closeCircle" 
 						slot="end" 
 						color="danger" 
-						@click="confirmDelete[index] = true">>
-					</ion-icon>
-					<ion-button 
-						v-if="isEdit && confirmDelete[index]"
-						slot="end" 
-						color="danger" 
-						shape="round"
 						@click="remove(index)">
-						Confirm
-					</ion-button>
+					</ion-icon>
 			</ion-item>
 		</ion-list>
 	</div>
@@ -75,10 +67,9 @@ import { closeCircle } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import HttpService from '../services/http'
 
-	let domains: Ref<any[]> = ref([]);
+	let aliases: Ref<any[]> = ref([]);
 	const input:Ref<string> = ref('');
 	const isEdit:Ref<boolean> = ref(false);
-	const confirmDelete: any = ref([]);
 	const isLoading:Ref<boolean> = ref(false);
 
 
@@ -86,8 +77,8 @@ import { closeCircle } from 'ionicons/icons';
 
 	async function load() {
 		isLoading.value = true;
-		let res:any = await HttpService.get("/domains");
-		domains.value = res.data;
+		let res:any = await HttpService.get("/aliases");
+		aliases.value = res.data;
 		isLoading.value = false;
 	}
 
@@ -104,17 +95,11 @@ import { closeCircle } from 'ionicons/icons';
 		// input.value = ''
 	}
 
-	async function remove(index: number) {
-		// Your remove logic here
-		confirmDelete.value[index] = false; // Reset the confirmDelete flag for this index
+	function remove(i: number) {
+		// todos.value.splice(i, 1)
 	}
 
-	// function remove(i: number) {
-	// 	// todos.value.splice(i, 1)
-	// }
-
 	function edit() {
-		confirmDelete.value.fill(false);
 		isEdit.value = !isEdit.value;
 	}
 </script>

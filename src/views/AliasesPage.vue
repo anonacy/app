@@ -17,6 +17,7 @@
       </ion-header>
 
       <div id="small-container animated fadeIn faster">
+        <AliasList></AliasList>
       </div>
     </ion-content>
   </ion-page>
@@ -24,6 +25,7 @@
 
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import AliasList from '../components/AliasList.vue';
 </script>
 
 <style scoped>

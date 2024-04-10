@@ -16,12 +16,18 @@
           </ion-toolbar>
         </ion-header>
 
+
+      <div id="small-container animated fadeIn faster">
+        <EndpointList></EndpointList>
+      </div>
+
       </ion-content>
     </ion-page>
 </template>
 
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonInput, IonButton, IonCard, IonCardContent } from '@ionic/vue';
+import EndpointList from '../components/EndpointList.vue';
 
 </script>
 
