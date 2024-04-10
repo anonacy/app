@@ -1,3 +1,10 @@
 .capitalize {
 	text-transform: capitalize;
 }
+
+.title {
+	font-size: 2.2em;
+	font-weight: bold;
+	padding-top: 50px;
+	padding-left: 16px;
+}

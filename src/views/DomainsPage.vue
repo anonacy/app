@@ -1,21 +1,6 @@
 <template>
   <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
-        </ion-buttons>
-        <ion-title class="capitalize">{{ String($route.path).substring(1) }}</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title class="capitalize" size="large">{{ String($route.path).substring(1) }}</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
       <div id="small-container animated fadeIn faster">
 				<DomainList></DomainList>
       </div>
@@ -24,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonContent, IonPage } from '@ionic/vue';
 import DomainList from '../components/DomainList.vue';
 </script>
 

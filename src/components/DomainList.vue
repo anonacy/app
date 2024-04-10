@@ -1,31 +1,34 @@
 <template>
 	<div class="small-container">
-		<ion-item lines="none">
-			<ion-label>
-			<ion-input
-				slot="start"
-				aria-label="Todo"
-				v-model="input"
-				autofocus
-				placeholder="Add a domain..."
-				@keyup.enter="add" >
-			</ion-input>
-		</ion-label>
-			<ion-button 
-				slot="end"
-				@click="add()"
-				shape="round"
-				size="small">
-					Add
-			</ion-button>
-			<ion-button 
-				slot="end"
-				@click="edit()"
-				shape="round"
-				size="small">
-				{{ isEdit ? 'Cancel' : 'Edit' }}
-			</ion-button>
-		</ion-item>
+		<div class="sticky">
+			<div class="title">{{`Domains (${domains.length})`}}</div>
+			<ion-item lines="none">
+				<ion-label>
+				<ion-input
+					slot="start"
+					aria-label="Todo"
+					v-model="input"
+					autofocus
+					placeholder="Add a domain..."
+					@keyup.enter="add" >
+				</ion-input>
+			</ion-label>
+				<ion-button 
+					slot="end"
+					@click="add()"
+					shape="round"
+					size="small">
+						Add
+				</ion-button>
+				<ion-button 
+					slot="end"
+					@click="edit()"
+					shape="round"
+					size="small">
+					{{ isEdit ? 'Cancel' : 'Edit' }}
+				</ion-button>
+			</ion-item>
+		</div>
 
 		<div style="display: flex; justify-content: center; width: 100%;">
 			<ion-spinner v-if="isLoading" name="dots"></ion-spinner>
