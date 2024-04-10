@@ -68,7 +68,7 @@
 	}
 
 	ion-icon {
-		margin-right: 10px !important;
+		margin-right: 12px !important;
 	}
 </style>
 ../state/state

@@ -10,6 +10,15 @@ export function isEmail(message = ""): boolean {
   return true;
 }
 
+export function isDomainName(message = ""): boolean {
+  const domainNameRegex = /^(?!-)[a-zA-Z0-9-]{1,63}(?<!-)(\.(?!-)[a-zA-Z0-9-]{1,63}(?<!-))*$/;
+  if (!domainNameRegex.test(message)) {
+    error('Invalid domain name format');
+    return false;
+  }
+  return true;
+}
+
 export function pluralize(word: string) {
   return word.endsWith("s") || word.endsWith("x") ? word + "es" : word + "s";
 }

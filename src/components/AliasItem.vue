@@ -5,6 +5,7 @@
 		class="animated fadeIn faster">
 			<ion-toggle 
 				mode="md"
+				aria-label="toggle alias"
 				:checked="alias.enabled"
 				v-model="alias.enabled"
 				disabled
@@ -67,6 +68,10 @@
 <style scoped>
 	ion-item {
 		--background-hover-opacity: 0;
+	}
+
+	ion-toggle {
+		margin-right: 12px !important;
 	}
 </style>
 ../state/state

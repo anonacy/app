@@ -7,6 +7,7 @@
 				mode="md"
 				:checked="domain.dns.ok"
 				v-model="domain.dns.ok"
+				aria-label="Domain ok"
 				slot="start"
 				disabled>
 			</ion-checkbox>

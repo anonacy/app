@@ -1,16 +1,16 @@
 import axios, { AxiosResponse } from 'axios';
 import { apikey } from '../state/state';
+import { error } from './dialog';
 
 const URL = import.meta.env.VITE_ANONACY_API_URL;
 
 class HttpService {
   private http = axios.create({
     baseURL: import.meta.env.VITE_ANONACY_API_URL,
-    timeout: 5000,
+    timeout: 30000,
   });
 
   async get<T = any>(url: string): Promise<AxiosResponse<T>> {
-    console.log("URL", URL);
     const options = { headers: { Authorization: `Bearer ${apikey.value}` } };
     return this.http.get<T>(url, options);
   }
