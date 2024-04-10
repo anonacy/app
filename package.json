@@ -1,9 +1,11 @@
 {
-  "name": "anonacy-vue",
+  "name": "@anonacy/vue",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "author": "hewham",
   "type": "module",
   "scripts": {
+    "start": "ionic serve",
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
@@ -39,5 +41,5 @@
     "vitest": "^0.34.6",
     "vue-tsc": "^1.0.24"
   },
-  "description": "An Ionic project"
+  "description": "UI for @anonacy/postal-api"
 }

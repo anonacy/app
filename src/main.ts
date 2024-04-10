@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
+import { mdTransitionAnimation } from '@ionic/core'
 
 import { IonicVue } from '@ionic/vue';
 
@@ -22,9 +23,15 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import './theme/text.css';
+import './theme/classes.css';
+import './theme/animate.css';
 
 const app = createApp(App)
-  .use(IonicVue)
+  .use(IonicVue, {
+		mode: 'ios',
+    navAnimation: mdTransitionAnimation
+	})
   .use(router);
   
 router.isReady().then(() => {
