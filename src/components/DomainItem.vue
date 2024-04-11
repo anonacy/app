@@ -2,8 +2,7 @@
 	<ion-item
 		:key="domain.domain"
 		lines="none"
-		class="animated fadeIn faster"
-		tappable>
+		class="animated fadeIn faster">
 			<ion-icon 
 				v-if="domain.dns.ok"
 				slot="start" 
@@ -35,13 +34,22 @@
 				@click="remove(index)">
 				Confirm
 			</ion-button>
-			<ion-button 
-				v-if="!domain.dns.ok || true"
+			<ion-button
+				v-if="!domain.dns.ok"
 				slot="end" 
 				color="medium" 
 				shape="round"
 				@click="() => view()">
-					Setup DNS
+					Setup&nbsp;DNS
+			</ion-button>
+			<ion-button
+				v-if="domain.dns.ok"
+				slot="end" 
+				fill="outline"
+				color="primary" 
+				shape="round"
+				@click="() => view()">
+					DNS
 			</ion-button>
 	</ion-item>
 </template>

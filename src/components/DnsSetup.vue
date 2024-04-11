@@ -12,14 +12,15 @@
 					<span class="highlight" @click="router.back">
 						<ion-icon :ios="arrowBack" color="primary"></ion-icon>
 						{{ domain }}
-						</span>&nbsp;<span class="text-medium">setup</span></div>
+						</span>
+					</div>
 				<ion-button 
 					@click="() => load()"
 					shape="round"
 					fill="outline"
 					size="small"
-					style="height: 32px; margin-top: 52px;">
-					Recheck DNS
+					style="height: 28px; margin-top: 48px;">
+					Verify DNS
 				</ion-button>
 			</div>
 		</div>
