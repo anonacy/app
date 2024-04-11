@@ -84,7 +84,6 @@
 	import { 
 		IonCard,
 		IonCardHeader,
-		IonCardTitle,
 		IonCardSubtitle,
 		IonCardContent,
 		IonSpinner,
@@ -94,7 +93,7 @@
 		IonLabel,
 
 	} from '@ionic/vue';
-	import { refreshCircleOutline, checkmarkCircle, arrowBack } from 'ionicons/icons';
+	import { checkmarkCircle, arrowBack } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import HttpService from '../services/http'
 	import { extractSubdomain } from '../services/utils';

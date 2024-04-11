@@ -162,7 +162,6 @@
 	const confirmDelete:Ref<boolean[]> = ref([]);
 	const props = defineProps(['type']); // can be 'domain', 'endpoint', 'alias'
 	const type:Ref<string> = ref(props.type);
-	const router = useRouter();
 	const route = useRoute();
 
 	load();
@@ -174,7 +173,6 @@
 	}
 
 	watch(route, async (to, from) => {
-		console.log("Route changed");
 		await load();
 	});
 
@@ -185,13 +183,6 @@
 			await addAlias();
 		}
 	}
-
-	// async function view(item: any) {
-	// 	console.log("view(): ", item);
-	// 	if(type.value == 'domain') {
-	// 		router.push(`/domains/${item.domain}`)
-	// 	}
-	// }
 
 	async function addDomain() {
 		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});

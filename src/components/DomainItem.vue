@@ -63,17 +63,12 @@
 
 <script setup lang="ts">
 	import { 
-		IonInput, 
-		IonList, 
 		IonItem, 
 		IonLabel, 
 		IonButton, 
-		IonIcon, 
-		IonSpinner, 
-		IonToggle,
-		IonCheckbox
+		IonIcon
 	} from '@ionic/vue';
-	import { closeCircle, checkmark, checkmarkCircle, checkmarkCircleOutline, removeCircleOutline, close } from 'ionicons/icons';
+	import { closeCircle, checkmark, checkmarkCircle, removeCircleOutline, close } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import { useRouter } from 'vue-router';
 

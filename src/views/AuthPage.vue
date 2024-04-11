@@ -36,7 +36,18 @@
 </template>
 
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonInput, IonButton, IonCard, IonText } from '@ionic/vue';
+import { 
+  IonButtons, 
+  IonContent, 
+  IonHeader, 
+  IonMenuButton, 
+  IonPage, 
+  IonTitle, 
+  IonToolbar, 
+  IonItem, 
+  IonInput, 
+  IonButton
+} from '@ionic/vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import HttpService from '../services/http';
@@ -45,6 +56,11 @@ import { apikey, setAuth } from '../state/state';
 
 let apikeyInput = ref(apikey.value);
 const router = useRouter();
+
+if(import.meta.env.VITE_ENVIRONMENT == 'development') {
+  apikeyInput.value = import.meta.env.VITE_TEST_API_KEY;
+  auth()
+}
 
 async function auth() {
   try {

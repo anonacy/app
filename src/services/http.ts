@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import { apikey } from '../state/state';
-import { error } from './dialog';
 
 const URL = import.meta.env.VITE_ANONACY_API_URL;
 

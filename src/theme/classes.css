@@ -59,8 +59,21 @@
 
 hr {
 	border: none;
-	border-bottom: 3px solid rgba(255,255,255,0.2);
+	border-bottom: 3px solid rgba(255, 255, 255, 0.15);
 	margin: 10px 0;
+}
+
+ion-card {
+	box-shadow: none;
+}
+
+ion-toolbar {
+	--border-width: 0 !important;
+}
+
+ion-menu {
+	/* border-right: solid var(--ion-window-color) 6px !important; */
+	--background: var(--ion-window-color) !important;
 }
 
 .split-pane-side {

@@ -20,15 +20,9 @@
 
 <script setup lang="ts">
 import { 
-  IonButtons,
-   IonContent,
-   IonHeader,
-   IonPage,
-   IonToolbar,
-   IonButton,
-   IonIcon 
+  IonContent,
+  IonPage
 } from '@ionic/vue';
-import { arrowBack } from 'ionicons/icons';
 import { useRouter, useRoute } from 'vue-router';
 import DnsSetup from '../components/DnsSetup.vue';
 

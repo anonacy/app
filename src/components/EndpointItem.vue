@@ -33,14 +33,9 @@
 <script setup lang="ts">
 	import { 
 		IonInput, 
-		IonList, 
 		IonItem, 
-		IonLabel, 
 		IonButton, 
 		IonIcon, 
-		IonSpinner, 
-		IonToggle,
-		IonCheckbox
 	} from '@ionic/vue';
 	import { closeCircle, flagOutline } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';

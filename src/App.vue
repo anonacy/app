@@ -1,11 +1,11 @@
 <template>
   <ion-app>
     <ion-split-pane content-id="main-content">
-      <ion-menu content-id="main-content" type="reveal" class="no-select">
+      <ion-menu content-id="main-content" type="push" class="no-select">
         <ion-content class="ion-padding">
           <ion-list v-if="apikey" id="inbox-list">
 
-            <div class="monospace underline">
+            <div class="monospace">
               <ion-list-header>{{ org }}</ion-list-header>
               <ion-note>{{ server }}</ion-note>
               <hr/>
@@ -24,8 +24,7 @@
                   <ion-icon 
                     aria-hidden="true" 
                     slot="start" 
-                    :ios="p.iosIcon" 
-                    :md="p.mdIcon">
+                    :ios="p.url === String($route.path).toLowerCase() ? p.iconSelected : p.icon"
                   </ion-icon>
                   <ion-label class="monospace">{{ p.title }}</ion-label>
               </ion-item>
@@ -33,15 +32,28 @@
           </ion-list>
 
           <div class="monospace bottom-block">
+              <ion-chip class="chip-note" @click="toggleDark">
+                <ion-icon 
+                  :ios="dark ? moon : sunny" 
+                  :color="dark ? 'primary' : 'medium'">
+                </ion-icon>
+                <ion-label v-if="dark">
+                  Theme&nbsp;<span class="text-primary">dark</span>
+                </ion-label>
+                <ion-label v-if="!dark">
+                  Theme&nbsp;<span class="text-primary">light</span>
+                </ion-label>
+              </ion-chip>
               <ion-chip v-if="apikey" class="chip-note" @click="() => removeKey()">
-                <ion-icon :ios="keyOutline"></ion-icon>
+                <ion-icon :ios="key" :color="dark ? 'primary' : 'medium'"></ion-icon>
                 <ion-label>
                   Logout&nbsp;<span class="text-primary">API&nbsp;Key</span>
                 </ion-label>
               </ion-chip>
               <ion-chip class="chip-note">
                 <ion-avatar>
-                  <img alt="Anonacy Logo" src="./assets/favicon.png" />
+                  <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
+                  <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
                 </ion-avatar>
                 <ion-label>
                   @anonacy/app&nbsp;<span class="text-primary">v{{ version }}</span>
@@ -49,7 +61,8 @@
               </ion-chip>
               <ion-chip class="chip-note" >
                 <ion-avatar>
-                  <img alt="Anonacy Logo" src="./assets/favicon.png" />
+                  <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
+                  <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
                 </ion-avatar>
                 <ion-label>
                   @anonacy/api&nbsp;<span class="text-primary" v-if="apiversion">v{{ apiversion }}</span>
@@ -58,14 +71,14 @@
               <a class="monospace" target="_blank" href="https://api2.anonacy.com/docs/">
                 <ion-chip class="chip-note" >
                   <ion-avatar>
-                    <img alt="Anonacy Logo" src="./assets/favicon.png" />
+                    <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
+                    <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
                   </ion-avatar>
                   <ion-label>
                     API&nbsp;<span class="text-primary">Documentation</span>
                   </ion-label>
                 </ion-chip>
               </a>
-
               <!-- <a class="monospace" target="_blank" href="https://github.com/hewham/anonacy-puppet">
                 <span class="text-primary">View Source Code</span>
               </a> -->
@@ -92,23 +105,36 @@ import {
   IonRouterOutlet,
   IonSplitPane,
   IonButton,
+  IonToggle,
+  IonCard,
   IonChip,
   IonAvatar
 } from '@ionic/vue';
 import {
   mailOutline,
-  mailSharp,
+  mail,
   globeOutline,
-  globeSharp,
+  globe,
   flagOutline,
-  flagSharp,
-  keyOutline
+  flag,
+  key,
+  moon,
+  sunny
 } from 'ionicons/icons';
 import { mdTransitionAnimation } from '@ionic/core'
 import { version } from '../package.json';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 import { apikey, rmAuth, org, server, apiversion } from './state/state';
 const router = useRouter();
+
+const dark = ref(true);
+document.body.classList.toggle('dark', dark.value);
+
+function toggleDark() {
+  dark.value = !dark.value;
+  document.body.classList.toggle('dark', dark.value);
+}
 
 function removeKey() {
   rmAuth();
@@ -119,20 +145,20 @@ const appPages = [
   {
     title: 'Domains',
     url: '/domains',
-    iosIcon: globeOutline,
-    mdIcon: globeSharp,
+    icon: globeOutline,
+    iconSelected: globe,
   },
   {
     title: 'Endpoints',
     url: '/endpoints',
-    iosIcon: flagOutline,
-    mdIcon: flagSharp,
+    icon: flagOutline,
+    iconSelected: flagOutline,
   },
   {
     title: 'Aliases',
     url: '/aliases',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    icon: mailOutline,
+    iconSelected: mail,
   },
 ];
 </script>
@@ -142,71 +168,8 @@ ion-menu{
   max-width: 250px;
 }
 
-ion-menu ion-content {
+ion-menu ion-content, ion-item {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
-}
-
-ion-menu.md ion-content {
-  --padding-start: 8px;
-  --padding-end: 8px;
-  --padding-top: 20px;
-  --padding-bottom: 20px;
-}
-
-ion-menu.md ion-list {
-  padding: 20px 0;
-}
-
-ion-menu.md ion-note {
-  margin-bottom: 30px;
-}
-
-ion-menu.md ion-list-header,
-ion-menu.md ion-note {
-  padding-left: 10px;
-}
-
-ion-menu.md ion-list#inbox-list {
-  border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
-}
-
-ion-menu.md ion-list#inbox-list ion-list-header {
-  font-size: 22px;
-  font-weight: 600;
-
-  min-height: 20px;
-}
-
-ion-menu.md ion-list#labels-list ion-list-header {
-  font-size: 16px;
-
-  margin-bottom: 18px;
-
-  color: #757575;
-
-  min-height: 26px;
-}
-
-ion-menu.md ion-item {
-  --padding-start: 10px;
-  --padding-end: 10px;
-  border-radius: 4px;
-}
-
-ion-menu.md ion-item.selected {
-  --background: rgba(var(--ion-color-primary-rgb), 0.14);
-}
-
-ion-menu.md ion-item.selected ion-icon {
-  color: var(--ion-color-primary);
-}
-
-ion-menu.md ion-item ion-icon {
-  color: #616e7e;
-}
-
-ion-menu.md ion-item ion-label {
-  font-weight: 500;
 }
 
 ion-menu.ios ion-content {
