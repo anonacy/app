@@ -145,8 +145,8 @@
 		loadingController
 	} from '@ionic/vue';
 	import { refreshOutline } from 'ionicons/icons';
-	import { ref, Ref } from 'vue';
-	import { useRouter } from 'vue-router';
+	import { ref, watch, Ref } from 'vue';
+	import { useRouter, useRoute } from 'vue-router';
 	import HttpService from '../services/http'
 	import { isEmail, isDomainName, pluralize, capitalize } from '../services/utils'
 	import AliasItem from './AliasItem.vue';
@@ -163,6 +163,7 @@
 	const props = defineProps(['type']); // can be 'domain', 'endpoint', 'alias'
 	const type:Ref<string> = ref(props.type);
 	const router = useRouter();
+	const route = useRoute();
 
 	load();
 
@@ -171,6 +172,11 @@
 		items.value = (await HttpService.get(`/${pluralize(type.value)}`)).data;
 		loading.value = false;
 	}
+
+	watch(route, async (to, from) => {
+		console.log("Route changed");
+		await load();
+	});
 
 	async function add() {
 		if(type.value == 'domain') {

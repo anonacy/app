@@ -29,55 +29,57 @@
 			<ion-spinner v-if="loading" name="dots"></ion-spinner>
 		</div>
 
-		<div v-if="dns.ok && !loading">
+		<ion-card v-if="!loading">
 			<div v-for="(key, index) in Object.keys(dns)">
-				<ion-chip v-if="key != 'ok'" class="chip-note">
+				<ion-chip v-if="key != 'ok' && dns[key]" class="chip-note">
 					<ion-icon :ios="checkmarkCircle" color="success"></ion-icon>
 					<ion-label>
 						{{ words[key] }} is setup correctly
 					</ion-label>
 				</ion-chip>
 			</div>
-		</div>
+		</ion-card>
 
 		<div v-if="setup.length > 0 && !loading">
-			<ion-card v-for="(record, index) in setup" class="monospace">
-				<ion-card-header>
-					<ion-card-subtitle class="text-white">{{ record.title }}</ion-card-subtitle>
-				</ion-card-header>
+			<div v-for="(record, index) in setup">
+				<ion-card v-if="!record.ok" class="monospace">
+					<ion-card-header>
+						<ion-card-subtitle class="text-white">{{ record.title }}</ion-card-subtitle>
+					</ion-card-header>
 
-				<ion-card-content>
-					<p>
-						type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-white">{{ record.type }}</span>
-						<br>
-						name:&nbsp;&nbsp;&nbsp;&nbsp;
-							<span class="text-white">{{ record.name }}</span>
-							<span v-if="record.name == '@' && extractSubdomain(domain) != ''">{{ ` (${extractSubdomain(domain)})` }}</span>
-							<span v-if="record.name != '@' && extractSubdomain(domain) != ''">{{ `.${extractSubdomain(domain)}` }}</span>
-						<br>
-						content:&nbsp;&nbsp;<span class="text-white">{{ record.content }}</span>
-						<br>
-						<span v-if="record.type == 'MX'">
-							priority:&nbsp;<span class="text-white">{{ record.priority }}</span>
+					<ion-card-content>
+						<p>
+							type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-white">{{ record.type }}</span>
 							<br>
-						</span>
-						<hr>
-						<span v-if="record.title.includes('SPF')">
-							You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ domain }}</span> with the content above
-						</span>
-						<span v-if="record.title.includes('DKIM')">
-							You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ record.name }}.{{ domain }}</span> with the content above
-						</span>
-						<span v-if="record.title.includes('Return Path')">
-							You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ record.name }}.{{ domain }}</span> with the content <span class="text-white">{{ record.content }}</span>
-						</span>
-						<span v-if="record.title.includes('MX')">
-							You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ domain }}</span> with the content <span class="text-white">{{ record.content }}</span> and priority <span class="text-white">{{ record.priority }}</span>
-						</span>
+							name:&nbsp;&nbsp;&nbsp;&nbsp;
+								<span class="text-white">{{ record.name }}</span>
+								<span v-if="record.name == '@' && extractSubdomain(domain) != ''">{{ ` (${extractSubdomain(domain)})` }}</span>
+								<span v-if="record.name != '@' && extractSubdomain(domain) != ''">{{ `.${extractSubdomain(domain)}` }}</span>
+							<br>
+							content:&nbsp;&nbsp;<span class="text-white">{{ record.content }}</span>
+							<br>
+							<span v-if="record.type == 'MX'">
+								priority:&nbsp;<span class="text-white">{{ record.priority }}</span>
+								<br>
+							</span>
+							<hr>
+							<span v-if="record.title.includes('SPF')">
+								You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ domain }}</span> with the content above
+							</span>
+							<span v-if="record.title.includes('DKIM')">
+								You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ record.name }}.{{ domain }}</span> with the content above
+							</span>
+							<span v-if="record.title.includes('Return Path')">
+								You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ record.name }}.{{ domain }}</span> with the content <span class="text-white">{{ record.content }}</span>
+							</span>
+							<span v-if="record.title.includes('MX')">
+								You should have a <span class="text-white">{{ record.type }}</span> record for <span class="text-white">{{ domain }}</span> with the content <span class="text-white">{{ record.content }}</span> and priority <span class="text-white">{{ record.priority }}</span>
+							</span>
 
-					</p>
-				</ion-card-content>
-			</ion-card>
+						</p>
+					</ion-card-content>
+				</ion-card>
+			</div>
 		</div>
 	</div>
 
@@ -113,17 +115,8 @@
 		RP: "Return Path", 
 		MX: "MX Record"
 	});
-	const showingNote: Ref<number> = ref(-1);
 
 	load();
-
-	function showNote(i: number) {
-		if (showingNote.value == i) {
-			showingNote.value = -1;
-		} else {
-			showingNote.value = i;
-		}
-	}
 
 	async function load() {
 		loading.value = true;
@@ -136,8 +129,8 @@
 		loading.value = false;
 	}
 
-	function remove(i: number) {
-		// todos.value.splice(i, 1)
+	function back() {
+		router.replace('/domains');
 	}
 
 </script>

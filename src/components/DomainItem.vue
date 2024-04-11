@@ -17,6 +17,13 @@
 			</ion-icon>
 			<ion-label class="no-disable">
 					{{ domain.domain }}
+					<br>
+					<span class="monospace" style="font-size: 0.8em">
+						<span :class="domain.dns.SPF ? 'text-primary' : 'text-medium'"><ion-icon :ios="domain.dns.SPF ? checkmark : close"></ion-icon>spf</span>&nbsp;
+						<span :class="domain.dns.DKIM ? 'text-primary' : 'text-medium'"><ion-icon :ios="domain.dns.DKIM ? checkmark : close"></ion-icon>dkim</span>&nbsp;
+						<span :class="domain.dns.RP ? 'text-primary' : 'text-medium'"><ion-icon :ios="domain.dns.RP ? checkmark : close"></ion-icon>rp</span>&nbsp;
+						<span :class="domain.dns.MX ? 'text-primary' : 'text-medium'"><ion-icon :ios="domain.dns.MX ? checkmark : close"></ion-icon>mx</span>
+					</span>
 			</ion-label>
 			<ion-icon 
 				class="animated fadeIn faster" 
@@ -31,7 +38,7 @@
 				slot="end" 
 				color="danger" 
 				shape="round"
-				@click="remove(index)">
+				@click="removeItem(index)">
 				Confirm
 			</ion-button>
 			<ion-button
@@ -66,7 +73,7 @@
 		IonToggle,
 		IonCheckbox
 	} from '@ionic/vue';
-	import { closeCircle, checkmarkCircle, checkmarkCircleOutline, removeCircleOutline } from 'ionicons/icons';
+	import { closeCircle, checkmark, checkmarkCircle, checkmarkCircleOutline, removeCircleOutline, close } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 	import { useRouter } from 'vue-router';
 
@@ -83,7 +90,7 @@
 		router.push(`/domains/${domain.domain}`)
 	}
 
-	function remove(i: number) {
+	function removeItem(i: number) {
 		// todos.value.splice(i, 1)
 	}
 
