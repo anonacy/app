@@ -180,8 +180,10 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-step-950: #f2f2f2;
 
     --ion-item-background: #090b2d;
+    --ion-toolbar-background: #090b2d;
 
-    --ion-card-background: #1c1c1d;
+    /* --ion-card-background: #1c1c1d; */
+    --ion-card-background: rgba(255,255,255,0.1);
   }
 
   .ios ion-modal {

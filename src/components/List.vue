@@ -1,12 +1,7 @@
 <template>
 	<div class="small-container">
 		<div class="sticky">
-			<div class="space-between">
-				<div class="title">{{`${capitalize(pluralize(type))} (${items.length})`}}</div>
-				<div style="margin-top: auto;">
-
-				</div>
-			</div>
+			<div class="title">{{`${capitalize(pluralize(type))} (${items.length})`}}</div>
 			<ion-item lines="none" v-if="type == 'domain'">
 				<ion-input
 					slot="start"
@@ -98,7 +93,7 @@
 					</ion-col>
 				</ion-row>
 			</ion-grid>
-			<hr/>
+			<hr style="margin-right: 30px"/>
 		</div>
 
 		<div style="display: flex; justify-content: center; width: 100%;">
@@ -109,7 +104,8 @@
 			<DomainItem v-for="(domain, index) in items"
 				:key="domain.domain"
 				:domain="domain"
-				:index="index">
+				:index="index"
+				tappable>
 			 </DomainItem>
 		</ion-list>
 		
@@ -149,7 +145,8 @@
 		loadingController
 	} from '@ionic/vue';
 	import { refreshOutline } from 'ionicons/icons';
-	import { ref, Ref } from 'vue';
+	import { ref, watch, Ref } from 'vue';
+	import { useRouter, useRoute } from 'vue-router';
 	import HttpService from '../services/http'
 	import { isEmail, isDomainName, pluralize, capitalize } from '../services/utils'
 	import AliasItem from './AliasItem.vue';
@@ -165,6 +162,9 @@
 	const confirmDelete:Ref<boolean[]> = ref([]);
 	const props = defineProps(['type']); // can be 'domain', 'endpoint', 'alias'
 	const type:Ref<string> = ref(props.type);
+	const router = useRouter();
+	const route = useRoute();
+
 	load();
 
 	async function load() {
@@ -173,6 +173,11 @@
 		loading.value = false;
 	}
 
+	watch(route, async (to, from) => {
+		console.log("Route changed");
+		await load();
+	});
+
 	async function add() {
 		if(type.value == 'domain') {
 			await addDomain();
@@ -180,6 +185,13 @@
 			await addAlias();
 		}
 	}
+
+	// async function view(item: any) {
+	// 	console.log("view(): ", item);
+	// 	if(type.value == 'domain') {
+	// 		router.push(`/domains/${item.domain}`)
+	// 	}
+	// }
 
 	async function addDomain() {
 		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});

@@ -15,6 +15,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/domains',
     component: () => import ('../views/ListPage.vue')
   },
+  {
+    path: '/domains/:domain',
+    component: () => import ('../views/DnsPage.vue')
+  },
 	{
     path: '/endpoints',
     component: () => import ('../views/ListPage.vue')

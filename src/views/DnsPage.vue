@@ -1,16 +1,18 @@
 <template>
   <ion-page>
-    <ion-header class="small-menu-button">
+    <!-- <ion-header class="small-menu-button">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-menu-button color="primary"></ion-menu-button>
+          <ion-button @click="router.back">
+            <ion-icon :ios="arrowBack"></ion-icon>
+          </ion-button>
         </ion-buttons>
       </ion-toolbar>
-    </ion-header>
+    </ion-header> -->
 
     <ion-content :fullscreen="true">
       <div id="small-container animated fadeIn faster">
-        <List :type="path"></List>
+        <DnsSetup :domain="domain"></DnsSetup>
       </div>
     </ion-content>
   </ion-page>
@@ -18,18 +20,22 @@
 
 <script setup lang="ts">
 import { 
-  IonContent, 
-  IonPage, 
-  IonHeader,
-  IonToolbar,
   IonButtons,
-  IonMenuButton
+   IonContent,
+   IonHeader,
+   IonPage,
+   IonToolbar,
+   IonButton,
+   IonIcon 
 } from '@ionic/vue';
-import List from '../components/List.vue';
-import { unpluralize } from '../services/utils';
-import { useRoute } from 'vue-router';
+import { arrowBack } from 'ionicons/icons';
+import { useRouter, useRoute } from 'vue-router';
+import DnsSetup from '../components/DnsSetup.vue';
+
+const router = useRouter();
 const route = useRoute();
-const path = unpluralize(route.path.substring(1)); // no plural, remove "/" from start
+const domain = route.params.domain;
+
 </script>
 
 <style scoped>
@@ -39,8 +45,8 @@ const path = unpluralize(route.path.substring(1)); // no plural, remove "/" from
   position: absolute;
   left: 0;
   right: 0;
-  /* top: 50%; */
-  /* transform: translateY(-50%); */
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #container strong {

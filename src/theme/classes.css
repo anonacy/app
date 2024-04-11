@@ -1,7 +1,12 @@
 .small-container {
 	width: 700px;
 	max-width: 100%;
-	margin-inline: 30px;
+	padding-left: 30px;
+	padding-right: 0;
+}
+
+.title {
+	font-size: 1.8em;
 }
 
 .sticky {
@@ -46,6 +51,12 @@
   left: 30px;
 }
 
+.highlight:hover {
+	color: var(--ion-color-primary);
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 hr {
 	border: none;
 	border-bottom: 3px solid rgba(255,255,255,0.2);
@@ -55,4 +66,13 @@ hr {
 .split-pane-side {
 	min-width: 300px;
 	border: none;
+}
+
+.small-menu-button, .small-menu-button ion-toolbar{
+	width: 50px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 0 0 20px 0 !important;
+	z-index: 1;
 }
