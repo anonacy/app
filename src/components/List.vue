@@ -1,7 +1,7 @@
 <template>
 	<div class="small-container">
 		<div class="sticky">
-			<div class="title">{{`${capitalize(pluralize(type))} (${items.length})`}}</div>
+			<div class="title">{{`${capitalize(pluralize(type))}`}}<span v-if="items.length > 0">{{` (${items.length})`}}</span></div>
 			<ion-item lines="none" v-if="type == 'domain'">
 				<ion-input
 					slot="start"
@@ -96,8 +96,8 @@
 			<hr style="margin-right: 30px"/>
 		</div>
 
-		<div style="display: flex; justify-content: center; width: 100%;">
-			<ion-spinner v-if="loading" name="dots"></ion-spinner>
+		<div v-if="loading" style="display: flex; justify-content: center; width: 100%;">
+			<ion-spinner name="dots"></ion-spinner>
 		</div>
 		
 		<ion-list v-if="!loading && type == 'domain'">

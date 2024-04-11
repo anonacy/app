@@ -3,12 +3,6 @@
 		<div class="sticky">
 			<div class="space-between">
 				<div class="title monospace">
-					<!-- <ion-button 
-						style="margin-top: -12px; margin-right: -px; padding: 0;"
-						@click="() => back()"
-						fill="clear">
-						<ion-icon :ios="arrowBack" color="primary"></ion-icon>
-					</ion-button> -->
 					<span class="highlight" @click="router.back">
 						<ion-icon :ios="arrowBack" color="primary"></ion-icon>
 						{{ domain }}
@@ -23,6 +17,7 @@
 					Verify DNS
 				</ion-button>
 			</div>
+			<hr/>
 		</div>
 
 		<div style="display: flex; justify-content: center; width: 100%; padding-top: 50px;">

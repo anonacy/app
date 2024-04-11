@@ -65,7 +65,6 @@
 	} from '@ionic/vue';
 	import { closeCircle, flagOutline, arrowRedoOutline, arrowRedo } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
-	import { defineEmits } from 'vue';
 
 	const props = defineProps(['alias', 'index', 'editing']);
 	const emit = defineEmits(['remove', 'toggle']);
