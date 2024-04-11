@@ -2,15 +2,20 @@
 	<ion-item
 		:key="domain.domain"
 		lines="none"
-		class="animated fadeIn faster">
-			<ion-checkbox 
-				mode="md"
-				:checked="domain.dns.ok"
-				v-model="domain.dns.ok"
-				aria-label="Domain ok"
-				slot="start"
-				disabled>
-			</ion-checkbox>
+		class="animated fadeIn faster"
+		tappable>
+			<ion-icon 
+				v-if="domain.dns.ok"
+				slot="start" 
+				:ios="checkmarkCircle" 
+				color="primary">
+			</ion-icon>
+			<ion-icon 
+				v-if="!domain.dns.ok"
+				slot="start" 
+				:ios="removeCircleOutline" 
+				color="medium">
+			</ion-icon>
 			<ion-label class="no-disable">
 					{{ domain.domain }}
 			</ion-label>
@@ -30,6 +35,14 @@
 				@click="remove(index)">
 				Confirm
 			</ion-button>
+			<ion-button 
+				v-if="!domain.dns.ok || true"
+				slot="end" 
+				color="medium" 
+				shape="round"
+				@click="() => view()">
+					Setup DNS
+			</ion-button>
 	</ion-item>
 </template>
 
@@ -45,8 +58,9 @@
 		IonToggle,
 		IonCheckbox
 	} from '@ionic/vue';
-	import { closeCircle } from 'ionicons/icons';
+	import { closeCircle, checkmarkCircle, checkmarkCircleOutline, removeCircleOutline } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
+	import { useRouter } from 'vue-router';
 
 	const props = defineProps(['domain', 'index']);
 
@@ -54,7 +68,12 @@
 	const index = props.index
 	const isEdit:Ref<boolean> = ref(false);
 	const confirmDelete: Ref<boolean> = ref(false);
+	const router = useRouter();
 
+	function view() {
+		console.log("view()");
+		router.push(`/domains/${domain.domain}`)
+	}
 
 	function remove(i: number) {
 		// todos.value.splice(i, 1)

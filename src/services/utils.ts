@@ -19,6 +19,15 @@ export function isDomainName(message = ""): boolean {
   return true;
 }
 
+export function extractSubdomain(domain: string): string {
+  const parts = domain.split('.');
+  if (parts.length > 2) {
+    return parts.slice(0, -2).join('.');
+  } else {
+    return '';
+  }
+}
+
 export function pluralize(word: string) {
   return word.endsWith("s") || word.endsWith("x") ? word + "es" : word + "s";
 }

@@ -10,9 +10,10 @@ class HttpService {
     timeout: 30000,
   });
 
-  async get<T = any>(url: string): Promise<AxiosResponse<T>> {
+  async get<T = any>(url: string, data?: any): Promise<AxiosResponse<T>> {
     const options = { 
-      headers: { Authorization: `Bearer ${apikey.value}` } 
+      headers: { Authorization: `Bearer ${apikey.value}` },
+      params: data
     };
     return this.http.get<T>(url, options);
   }
