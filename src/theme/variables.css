@@ -78,11 +78,14 @@ http://ionicframework.com/docs/theming/ */
   /** custom **/
   --ion-color-white: #000;
   --ion-color-white-rgb: 0, 0, 0;
+
+
   --ion-background-color: #fff;
-  --ion-background-color-rgb: 255,255,255;
+  --ion-background-color-rgb: 247,245,238;
   --ion-toolbar-background: #fff;
-  --ion-card-background: rgba(0,0,0, 0.04);
-  --ion-window-color: rgba(0,0,0, 0.04);
+
+  --ion-card-background: #f6f6f6;
+  --ion-window-color: #f6f6f6;
 }
 
 
@@ -166,6 +169,13 @@ http://ionicframework.com/docs/theming/ */
     --ion-background-color: #090b2d;
     --ion-background-color-rgb: 0,0,0;
 
+    --ion-item-background: #090b2d;
+    /* --ion-toolbar-background: #090b2d; */
+    --ion-toolbar-background: transparent;
+
+    --ion-card-background: rgba(255,255,255,0.1);
+    --ion-window-color: #131535;
+
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255,255,255;
 
@@ -191,15 +201,6 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-step-850: #d9d9d9;
     --ion-color-step-900: #e6e6e6;
     --ion-color-step-950: #f2f2f2;
-
-    --ion-item-background: #090b2d;
-    --ion-toolbar-background: #090b2d;
-
-    /* --ion-card-background: #1c1c1d; */
-    --ion-card-background: rgba(255,255,255,0.1);
-    --ion-window-color: rgba(255,255,255,0.05);
-    /* --ion-window-color: #090b2d; */
-
   }
 
   .ios ion-modal {

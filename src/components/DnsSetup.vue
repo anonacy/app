@@ -20,8 +20,8 @@
 			<hr/>
 		</div>
 
-		<div style="display: flex; justify-content: center; width: 100%; padding-top: 50px;">
-			<ion-spinner v-if="loading" name="dots"></ion-spinner>
+		<div v-if="loading" style="display: flex; justify-content: center; width: 100%; padding-top: 50px;">
+			<ion-spinner name="dots"></ion-spinner>
 		</div>
 
 		<ion-card v-if="!loading">

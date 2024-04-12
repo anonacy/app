@@ -1,17 +1,14 @@
 .small-container {
 	width: 700px;
 	max-width: 100%;
-	padding-left: 30px;
-	padding-right: 0;
-}
+	padding-left: 20px;
+	padding-right: 20px;
 
-.title {
-	font-size: 1.8em;
 }
 
 .sticky {
 	position: sticky;
-	top: 0;
+	top: 0px;
 	z-index: 10;
 	background: var(--ion-background-color)
 }
@@ -55,25 +52,6 @@
 	color: var(--ion-color-primary);
 	text-decoration: underline;
 	cursor: pointer;
-}
-
-hr {
-	border: none;
-	border-bottom: 3px solid rgba(255, 255, 255, 0.15);
-	margin: 10px 0;
-}
-
-ion-card {
-	box-shadow: none;
-}
-
-ion-toolbar {
-	--border-width: 0 !important;
-}
-
-ion-menu {
-	/* border-right: solid var(--ion-window-color) 6px !important; */
-	--background: var(--ion-window-color) !important;
 }
 
 .split-pane-side {

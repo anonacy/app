@@ -1,0 +1,13 @@
+ion-card {
+	box-shadow: none;
+}
+
+ion-toolbar {
+	--border-width: 0 !important;
+}
+
+hr {
+	border: none;
+	border-bottom: 3px solid var(--ion-window-color);
+	margin: 6px 10px 0px 10px;
+}

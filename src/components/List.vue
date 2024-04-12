@@ -93,7 +93,7 @@
 					</ion-col>
 				</ion-row>
 			</ion-grid>
-			<hr style="margin-right: 30px"/>
+			<hr/>
 		</div>
 
 		<div v-if="loading" style="display: flex; justify-content: center; width: 100%;">
