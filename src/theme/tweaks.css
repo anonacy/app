@@ -6,8 +6,13 @@ ion-toolbar {
 	--border-width: 0 !important;
 }
 
+ion-spinner {
+  margin-top: 40px;
+  opacity: 0.5;
+}
+
 hr {
 	border: none;
-	border-bottom: 3px solid var(--ion-window-color);
-	margin: 6px 10px 0px 10px;
+	border-bottom: 3px solid var(--ion-fade-color);
+	margin: 10px;
 }

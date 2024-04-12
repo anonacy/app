@@ -32,7 +32,7 @@
 				</ion-button>
 			</ion-item>
 
-			<ion-grid v-if="type == 'alias'" lines="none">
+			<ion-grid v-if="type == 'alias'" lines="none" class="ion-no-padding">
 				<ion-row>
 					<ion-col size="5">
 						<ion-item lines="none">

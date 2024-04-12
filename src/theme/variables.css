@@ -86,6 +86,7 @@ http://ionicframework.com/docs/theming/ */
 
   --ion-card-background: #f6f6f6;
   --ion-window-color: #f6f6f6;
+  --ion-fade-color: rgba(0,0,0,0.05);
 }
 
 
@@ -175,6 +176,7 @@ http://ionicframework.com/docs/theming/ */
 
     --ion-card-background: rgba(255,255,255,0.1);
     --ion-window-color: #131535;
+    --ion-fade-color: rgba(255,255,255,0.05);
 
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255,255,255;

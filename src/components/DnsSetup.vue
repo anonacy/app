@@ -20,7 +20,7 @@
 			<hr/>
 		</div>
 
-		<div v-if="loading" style="display: flex; justify-content: center; width: 100%; padding-top: 50px;">
+		<div v-if="loading" style="display: flex; justify-content: center; width: 100%;">
 			<ion-spinner name="dots"></ion-spinner>
 		</div>
 
