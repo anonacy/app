@@ -69,4 +69,4 @@ Place dev variables in `.env.development` and prod variables in `.env.production
 
 ***
 
-Built by hew🪶 @ anonacy
+Built by hew🪶

@@ -50,16 +50,18 @@
                     Logout&nbsp;<span class="text-primary">API&nbsp;Key</span>
                   </ion-label>
                 </ion-chip>
-                <ion-chip class="chip-note">
-                  <ion-avatar>
-                    <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
-                    <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
-                  </ion-avatar>
-                  <ion-label>
-                    @anonacy/app&nbsp;<span class="text-primary">v{{ version }}</span>
-                  </ion-label>
-                </ion-chip>
-                <ion-chip class="chip-note" >
+                <a class="monospace" target="_blank" href="https://github.com/anonacy/app" title="View Source Code">
+                  <ion-chip class="chip-note">
+                    <ion-avatar>
+                      <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
+                      <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
+                    </ion-avatar>
+                    <ion-label>
+                      @anonacy/app&nbsp;<span class="text-primary">v{{ version }}</span>
+                    </ion-label>
+                  </ion-chip>
+                </a>
+                <ion-chip class="chip-note" title="Coming Soon">
                   <ion-avatar>
                     <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
                     <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
@@ -105,9 +107,6 @@ import {
   IonNote,
   IonRouterOutlet,
   IonSplitPane,
-  IonButton,
-  IonToggle,
-  IonCard,
   IonChip,
   IonAvatar
 } from '@ionic/vue';
