@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import { apikey } from '../state/state';
 
-const URL = import.meta.env.VITE_ANONACY_API_URL;
+const URL = import.meta.env.VITE_API_URL + (import.meta.env.VITE_API_PORT ? `:${import.meta.env.VITE_PORT}` : '');
 
 class HttpService {
   private http = axios.create({
-    baseURL: import.meta.env.VITE_ANONACY_API_URL,
+    baseURL: URL,
     timeout: 30000,
   });
 

@@ -1,13 +1,13 @@
 {
   "name": "@anonacy/app",
   "private": true,
-  "version": "2.1.2",
+  "version": "2.1.3",
   "author": "hewham",
   "license": "AGPL",
   "type": "module",
   "scripts": {
     "start": "ionic serve",
-    "dev": "vite",
+    "serve": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "deploy": "npm run build && firebase deploy",
@@ -16,7 +16,10 @@
     "v": "npm run version",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docker": "docker buildx build --push --platform linux/amd64,linux/arm64 -t anonacy/app:latest .",
+    "docker:tagged": "docker buildx build --push --platform linux/amd64,linux/arm64 -t anonacy/app:$npm_package_version .",
+    "docker:builder": "docker buildx create --use"
   },
   "dependencies": {
     "@capacitor/app": "5.0.7",
