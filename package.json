@@ -16,7 +16,11 @@
     "v": "npm run version",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "docker:all": "npm run docker:build && npm run docker:push && npm run docker:remove",
+    "docker:build": "docker build -t anonacy/app:$npm_package_version .",
+    "docker:push": "docker push anonacy/app:$npm_package_version",
+    "docker:remove": "docker rmi anonacy/app:$npm_package_version"
   },
   "dependencies": {
     "@capacitor/app": "5.0.7",
