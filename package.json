@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "start": "ionic serve",
-    "dev": "vite",
+    "serve": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "deploy": "npm run build && firebase deploy",
@@ -17,10 +17,9 @@
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "lint": "eslint .",
-    "docker:all": "npm run docker:build && npm run docker:push && npm run docker:remove",
-    "docker:build": "docker build -t anonacy/app:$npm_package_version .",
-    "docker:push": "docker push anonacy/app:$npm_package_version",
-    "docker:remove": "docker rmi anonacy/app:$npm_package_version"
+    "docker": "docker buildx build --push --platform linux/amd64,linux/arm64 -t anonacy/app:latest .",
+    "docker:tagged": "docker buildx build --push --platform linux/amd64,linux/arm64 -t anonacy/app:$npm_package_version .",
+    "docker:builder": "docker buildx create --use"
   },
   "dependencies": {
     "@capacitor/app": "5.0.7",

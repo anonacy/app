@@ -1,5 +1,9 @@
 FROM node:20-alpine
 
+ENV VITE_ENVIRONMENT='production'
+ENV VITE_API_URL='127.0.0.1'
+ENV VITE_API_PORT='3001'
+
 # install simple http server for serving static content
 RUN npm install -g http-server
 
@@ -11,13 +15,11 @@ WORKDIR /usr/src/anonacy-app
 COPY package*.json ./
 
 # install project dependencies
-RUN npm install
+RUN npm ci
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
-# build app for production with minification
-RUN npm run build
-
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+
+CMD npm run build && http-server dist
