@@ -1,7 +1,7 @@
 {
   "name": "@anonacy/app",
   "private": true,
-  "version": "2.1.3",
+  "version": "2.1.4",
   "author": "hewham",
   "license": "AGPL",
   "type": "module",
@@ -18,7 +18,6 @@
     "test:unit": "vitest",
     "lint": "eslint .",
     "docker": "docker buildx build --push --platform linux/amd64,linux/arm64 -t anonacy/app:latest .",
-    "docker:tagged": "docker buildx build --push --platform linux/amd64,linux/arm64 -t anonacy/app:$npm_package_version .",
     "docker:builder": "docker buildx create --use"
   },
   "dependencies": {
