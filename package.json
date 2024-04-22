@@ -1,7 +1,7 @@
 {
   "name": "@anonacy/app",
   "private": true,
-  "version": "2.1.6",
+  "version": "2.1.7",
   "author": "hewham",
   "license": "AGPL",
   "type": "module",

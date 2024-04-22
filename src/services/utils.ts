@@ -70,5 +70,6 @@ export function convertTimestamp(timestamp: number) {
     hour12 = 12;
   }
 
-  return `${month} ${day} ${year}, ${hour12}:${minutes}:${seconds}${period}`;
+  return `${month} ${day}, ${hour12}:${minutes}${period}`;
+  // return `${month} ${day} ${year}, ${hour12}:${minutes}:${seconds}${period}`; // includes year & seconds
 }

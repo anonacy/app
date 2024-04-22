@@ -1,7 +1,17 @@
 <template>
 	<div class="small-container">
 		<div class="sticky">
-			<div class="title">{{`${capitalize(pluralize(type))}`}}<span v-if="items.length > 0">{{` (${items.length})`}}</span></div>
+			<div class="space-between">
+				<div class="title">{{`${capitalize(pluralize(type))}`}}<span v-if="items.length > 0">{{` (${items.length})`}}</span></div>
+				<ion-button
+					fill="clear"
+					shape="round"
+					class="refresh-button"
+					@click="() => load()"
+					:disabled="loading">
+					<ion-icon :ios="refreshCircleOutline" slot="icon-only"></ion-icon>
+				</ion-button>
+			</div>
 			<ion-item lines="none" v-if="type == 'domain'">
 				<ion-input
 					slot="start"
@@ -17,18 +27,9 @@
 					@click="add()"
 					shape="round"
 					size="small"
-					fill="solid"
+					fill="outline"
 					:disabled="loading">
 						Add
-				</ion-button>
-				<ion-button
-					fill="solid"
-					shape="round"
-					size="small"
-					slot="end"
-					@click="() => load()"
-					:disabled="loading">
-					<ion-icon :ios="refreshOutline"></ion-icon>
 				</ion-button>
 			</ion-item>
 
@@ -67,7 +68,7 @@
 								@click="add()"
 								shape="round"
 								size="small"
-								fill="solid"
+								fill="outline"
 								:disabled="loading">
 									Add
 							</ion-button>
@@ -76,18 +77,9 @@
 								@click="edit()"
 								shape="round"
 								size="small"
-								fill="solid"
+								fill="outline"
 								:disabled="loading">
 									{{ editing ? 'Done' : 'Edit' }}
-							</ion-button>
-							<ion-button
-								fill="solid"
-								shape="round"
-								size="small"
-								slot="end"
-								@click="() => load()"
-								:disabled="loading">
-								<ion-icon :ios="refreshOutline"></ion-icon>
 							</ion-button>
 						</ion-item>
 					</ion-col>
@@ -129,10 +121,9 @@
 		</ion-list>
 		
 		<ion-list v-if="!loading && type == 'message'">
-			<MessageItem v-for="(message, index) in items"
+			<MessageItem v-for="(message) in items"
 				:key="message.message"
-				:message="message"
-				:index="index">
+				:message="message">
 			 </MessageItem>
 		</ion-list>
 	</div>
@@ -152,7 +143,7 @@
 		IonCol,
 		loadingController
 	} from '@ionic/vue';
-	import { refreshOutline } from 'ionicons/icons';
+	import { refreshOutline, refreshCircle, refreshCircleOutline } from 'ionicons/icons';
 	import { ref, watch, Ref } from 'vue';
 	import { useRouter, useRoute } from 'vue-router';
 	import HttpService from '../services/http'
@@ -283,6 +274,21 @@
 <style scoped>
 	ion-item {
 		--background-hover-opacity: 0;
+	}
+
+	.refresh-button {
+		--padding-top: 0;
+		--padding-bottom: 0;
+		--padding-start: 0;
+		--padding-end: 0;
+		max-height: 0px !important;
+		margin-top: 48px;
+		margin-bottom: -30px;
+		margin-right: 12px;
+	}
+
+	.refresh-button .button-native {
+		padding: 0 !important;
 	}
 </style>
 ../state/state

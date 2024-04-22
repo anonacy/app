@@ -1,35 +1,28 @@
 <template>
 	<ion-item
-		:key="message.id"
+		:key="props.message.id"
 		lines="none"
 		class="animated fadeIn faster">
 			<ion-icon
-				:color="statusDict[message.status].color"
-				:ios="statusDict[message.status].icon">
+			  slot="start"
+				:color="statusDict[props.message.status].color"
+				:ios="statusDict[props.message.status].icon">
 			</ion-icon>
 			<ion-label>
-				<span class="monospace text-medium">from:&nbsp;</span>{{ message.mail_from }}
+				<span class="monospace text-medium">from:&nbsp;&nbsp;</span>{{ props.message.mail_from }}
 				<br/>
-				<span class="monospace text-medium">to:&nbsp;&nbsp;&nbsp;</span>{{ message.rcpt_to }}
+				<span class="monospace text-medium">alias:&nbsp;</span>{{ props.message.rcpt_to }}
 				<br/>
-				<span class="monospace text-medium">time:&nbsp;</span>{{ convertTimestamp(message.timestamp) }}
+				<!-- <span class="monospace text-medium">endpt:&nbsp;</span><span :class="props.message.endpoint ? '' : 'text-medium'">{{ props.message.endpoint ? props.message.endpoint : 'not available'}}</span>
+				<br/> -->
+				<span class="monospace text-medium">time:&nbsp;&nbsp;</span>{{ convertTimestamp(props.message.timestamp) }}
 			</ion-label>
-			<!-- <ion-label>
-				<ion-icon :ios="mailOutline" color="medium"></ion-icon> {{ message.mail_from }}
-				<br/>
-				<ion-icon :ios="arrowRedoOutline" class="flip-vertically" color="medium"></ion-icon> {{ message.rcpt_to }}
-				<span v-if="message.endpoint_id">
-					<br/>
-					<ion-icon :ios="arrowRedoOutline" class="flip-vertically"></ion-icon> {{ message.endpoint_id }}
-					<br/>
-				</span>
-			</ion-label> -->
 			<ion-chip
 				slot="end"
 				class="monospace"
 				style="font-size: 0.7em"
-				:color="statusDict[message.status].color">
-				{{ statusDict[message.status].word }}
+				:color="statusDict[props.message.status].color">
+				{{ statusDict[props.message.status].word }}
 			</ion-chip>
 	</ion-item>
 </template>
@@ -55,7 +48,7 @@
 	import { ref, Ref } from 'vue';
 	import { convertTimestamp } from '../services/utils';
 
-	const props = defineProps(['message', 'index']);
+	const props = defineProps(['message']);
 	const statusDict: { [key: string]: any } = {
 		Sent: {
 			color: "success",
@@ -72,6 +65,11 @@
 			icon: sendOutline,
 			word: "Soft Fail",
 		},
+		Pending: {
+			color: "medium",
+			icon: sendOutline,
+			word: "Pending",
+		},
 		Held: {
 			color: "medium",
 			icon: sendOutline,
@@ -84,10 +82,6 @@
 		}
 	}
 
-
-	const message = props.message
-	const index = props.index
-
 </script>
 
 <style scoped>
@@ -97,6 +91,10 @@
 
 	ion-icon {
 		margin-right: 12px !important;
+	}
+
+	ion-label {
+		font-size: 0.9em !important;
 	}
 </style>
 ../state/state
