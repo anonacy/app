@@ -10,10 +10,11 @@
               <ion-note>{{ server }}</ion-note>
               <!-- <hr/> -->
             </div>
-            <ion-list v-if="apikey" id="inbox-list">
+            <ion-list v-if="apikey">
               <ion-menu-toggle 
                 :auto-hide="false" v-for="(p, i) in appPages"
                 :key="i">
+                  <hr v-if="p.seperator" />
                   <ion-item 
                   tappable 
                   router-direction="root" 
@@ -118,6 +119,8 @@ import {
   globeOutline,
   globe,
   flagOutline,
+  send,
+  sendOutline,
   flag,
   key,
   moon,
@@ -149,18 +152,28 @@ const appPages = [
     url: '/domains',
     icon: globeOutline,
     iconSelected: globe,
+    seperator: true
   },
   {
     title: 'Endpoints',
     url: '/endpoints',
     icon: flagOutline,
     iconSelected: flagOutline,
+    seperator: false
   },
   {
     title: 'Aliases',
     url: '/aliases',
     icon: mailOutline,
     iconSelected: mail,
+    seperator: false
+  },
+  {
+    title: 'Messages',
+    url: '/messages',
+    icon: sendOutline,
+    iconSelected: send,
+    seperator: true
   },
 ];
 </script>

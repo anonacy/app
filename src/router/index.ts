@@ -26,6 +26,10 @@ const routes: Array<RouteRecordRaw> = [
 	{
     path: '/aliases',
     component: () => import ('../views/ListPage.vue')
+  },
+	{
+    path: '/messages',
+    component: () => import ('../views/ListPage.vue')
   }
 ]
 

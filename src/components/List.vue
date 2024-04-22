@@ -127,6 +127,14 @@
 				:index="index">
 			 </EndpointItem>
 		</ion-list>
+		
+		<ion-list v-if="!loading && type == 'message'">
+			<MessageItem v-for="(message, index) in items"
+				:key="message.message"
+				:message="message"
+				:index="index">
+			 </MessageItem>
+		</ion-list>
 	</div>
 </template>
 
@@ -149,9 +157,10 @@
 	import { useRouter, useRoute } from 'vue-router';
 	import HttpService from '../services/http'
 	import { isEmail, isDomainName, pluralize, capitalize } from '../services/utils'
-	import AliasItem from './AliasItem.vue';
-	import EndpointItem from './EndpointItem.vue';
 	import DomainItem from './DomainItem.vue';
+	import EndpointItem from './EndpointItem.vue';
+	import AliasItem from './AliasItem.vue';
+	import MessageItem from './MessageItem.vue';
 
 	const items: Ref<any[]> = ref([]);
 	const domainInput:Ref<string> = ref('');
@@ -169,6 +178,7 @@
 	async function load() {
 		loading.value = true;
 		items.value = (await HttpService.get(`/${pluralize(type.value)}`)).data;
+		console.log("items: ", items.value)
 		loading.value = false;
 	}
 
