@@ -169,8 +169,8 @@ const appPages = [
     seperator: false
   },
   {
-    title: 'Messages',
-    url: '/messages',
+    title: 'Forwards',
+    url: '/forwards',
     icon: sendOutline,
     iconSelected: send,
     seperator: true

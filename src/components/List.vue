@@ -120,11 +120,11 @@
 			 </EndpointItem>
 		</ion-list>
 		
-		<ion-list v-if="!loading && type == 'message'">
-			<MessageItem v-for="(message) in items"
-				:key="message.message"
-				:message="message">
-			 </MessageItem>
+		<ion-list v-if="!loading && type == 'forward'">
+			<ForwardItem v-for="(forward) in items"
+				:key="forward.id"
+				:forward="forward">
+			 </ForwardItem>
 		</ion-list>
 	</div>
 </template>
@@ -151,7 +151,7 @@
 	import DomainItem from './DomainItem.vue';
 	import EndpointItem from './EndpointItem.vue';
 	import AliasItem from './AliasItem.vue';
-	import MessageItem from './MessageItem.vue';
+	import ForwardItem from './ForwardItem.vue';
 
 	const items: Ref<any[]> = ref([]);
 	const domainInput:Ref<string> = ref('');

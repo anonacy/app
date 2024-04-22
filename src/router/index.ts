@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('../views/ListPage.vue')
   },
 	{
-    path: '/messages',
+    path: '/forwards',
     component: () => import ('../views/ListPage.vue')
   }
 ]

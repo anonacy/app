@@ -1,28 +1,28 @@
 <template>
 	<ion-item
-		:key="props.message.id"
+		:key="props.forward.id"
 		lines="none"
 		class="animated fadeIn faster">
 			<ion-icon
 			  slot="start"
-				:color="statusDict[props.message.status].color"
-				:ios="statusDict[props.message.status].icon">
+				:color="statusDict[props.forward.status].color"
+				:ios="statusDict[props.forward.status].icon">
 			</ion-icon>
 			<ion-label>
-				<span class="monospace text-medium">from:&nbsp;&nbsp;</span>{{ props.message.mail_from }}
+				<span class="monospace text-medium">from:&nbsp;&nbsp;</span>{{ props.forward.sender }}
 				<br/>
-				<span class="monospace text-medium">alias:&nbsp;</span>{{ props.message.rcpt_to }}
+				<span class="monospace text-medium">alias:&nbsp;</span>{{ props.forward.alias }}
 				<br/>
-				<!-- <span class="monospace text-medium">endpt:&nbsp;</span><span :class="props.message.endpoint ? '' : 'text-medium'">{{ props.message.endpoint ? props.message.endpoint : 'not available'}}</span>
+				<!-- <span class="monospace text-medium">endpt:&nbsp;</span><span :class="props.forward.endpoint ? '' : 'text-medium'">{{ props.forward.endpoint ? props.forward.endpoint : 'not available'}}</span>
 				<br/> -->
-				<span class="monospace text-medium">time:&nbsp;&nbsp;</span>{{ convertTimestamp(props.message.timestamp) }}
+				<span class="monospace text-medium">time:&nbsp;&nbsp;</span>{{ convertTimestamp(props.forward.timestamp) }}
 			</ion-label>
 			<ion-chip
 				slot="end"
 				class="monospace"
 				style="font-size: 0.7em"
-				:color="statusDict[props.message.status].color">
-				{{ statusDict[props.message.status].word }}
+				:color="statusDict[props.forward.status].color">
+				{{ statusDict[props.forward.status].word }}
 			</ion-chip>
 	</ion-item>
 </template>
@@ -48,7 +48,7 @@
 	import { ref, Ref } from 'vue';
 	import { convertTimestamp } from '../services/utils';
 
-	const props = defineProps(['message']);
+	const props = defineProps(['forward']);
 	const statusDict: { [key: string]: any } = {
 		Sent: {
 			color: "success",
