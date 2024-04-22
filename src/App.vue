@@ -61,15 +61,17 @@
                     </ion-label>
                   </ion-chip>
                 </a>
-                <ion-chip class="chip-note" title="Coming Soon">
-                  <ion-avatar>
-                    <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
-                    <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
-                  </ion-avatar>
-                  <ion-label>
-                    @anonacy/api&nbsp;<span class="text-primary" v-if="apiversion">v{{ apiversion }}</span>
-                  </ion-label>
-                </ion-chip>
+                <a class="monospace" target="_blank" href="https://github.com/anonacy/api" title="View Source Code">
+                  <ion-chip class="chip-note">
+                    <ion-avatar>
+                      <img v-if="!dark" alt="Anonacy Logo" src="./assets/light96.png" />
+                      <img v-if="dark" alt="Anonacy Logo" src="./assets/purple96.png" />
+                    </ion-avatar>
+                    <ion-label>
+                      @anonacy/api&nbsp;<span class="text-primary" v-if="apiversion">v{{ apiversion }}</span>
+                    </ion-label>
+                  </ion-chip>
+                </a>
                 <a class="monospace" target="_blank" href="https://api2.anonacy.com/docs/">
                   <ion-chip class="chip-note" >
                     <ion-avatar>
