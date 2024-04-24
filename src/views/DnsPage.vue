@@ -1,15 +1,5 @@
 <template>
   <ion-page>
-    <!-- <ion-header class="small-menu-button">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button @click="router.back">
-            <ion-icon :ios="arrowBack"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header> -->
-
     <ion-content :fullscreen="true">
       <div id="small-container animated fadeIn faster">
         <DnsSetup :domain="domain"></DnsSetup>

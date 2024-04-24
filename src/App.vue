@@ -7,7 +7,7 @@
               
             <div class="monospace">
               <ion-list-header>{{ org }}</ion-list-header>
-              <ion-note>{{ server }}</ion-note>
+              <ion-note>{{ serverName }}</ion-note>
               <!-- <hr/> -->
             </div>
             <ion-list v-if="apikey">
@@ -130,7 +130,7 @@ import { mdTransitionAnimation } from '@ionic/core'
 import { version } from '../package.json';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { apikey, rmAuth, org, server, apiversion } from './state/state';
+import { apikey, rmAuth, org, serverName, apiversion } from './state/state';
 const router = useRouter();
 
 const dark = ref(true);

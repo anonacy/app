@@ -65,7 +65,15 @@ if(import.meta.env.VITE_ENVIRONMENT == 'development') {
 async function auth() {
   try {
     let res: any = (await HttpService.auth(apikeyInput.value)).data;
-    setAuth(apikeyInput.value, res.org, res.server, res.orgID, res.serverID, res.version);
+    setAuth(
+      apikeyInput.value, 
+      res.org, 
+      res.orgID, 
+      res.server, 
+      res.serverName, 
+      res.serverID, 
+      res.version
+    );
     router.push('/domains'); // Redirect to /domains
     apikeyInput.value = '';
   } catch (err) {
