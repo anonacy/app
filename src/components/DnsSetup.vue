@@ -115,16 +115,9 @@
 	async function load() {
 		loading.value = true;
 		let res:any = await HttpService.get(`/domain`, { domain: props.domain });
-		console.log("res: ", res.data);
 		setup.value = res.data.setup;
 		dns.value = res.data.dns;
-		console.log(setup.value);
-		console.log(dns.value);
 		loading.value = false;
-	}
-
-	function back() {
-		router.replace('/domains');
 	}
 
 </script>

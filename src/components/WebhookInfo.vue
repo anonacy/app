@@ -1,5 +1,4 @@
 <template>
-		<hr />
 		<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Webhook Events:</h2>
 		<ion-card  v-for="(info, index) in webhookInfo">
 			<ion-card-header>

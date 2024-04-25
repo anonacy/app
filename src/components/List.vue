@@ -157,6 +157,7 @@
 				@remove="remove"
 				@toggle="toggle">
 			 </WebhookItem>
+			 <hr  v-if="items.length > 0"/>
 			 <WebhookInfo></WebhookInfo>
 		</ion-list>
 
