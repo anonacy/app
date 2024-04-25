@@ -1,6 +1,6 @@
 <template>
 		<hr />
-		<h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WebHook Events:</h1>
+		<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Webhook Events:</h2>
 		<ion-card  v-for="(info, index) in webhookInfo">
 			<ion-card-header>
 				<ion-card-title class="text-white">{{ info.name }}</ion-card-title>
@@ -32,7 +32,7 @@
 		},
 		{
 			name: "MessageDeliveryFailed",
-			description: "An e-mail cannot be delivered to its endpoint. This is a permanent failure so it will no be retried."
+			description: "An e-mail cannot be delivered to its endpoint. This is a permanent failure so it will not be retried."
 		},
 		{
 			name: "MessageDelayed",
@@ -55,6 +55,6 @@
 		margin: 12px 20px;
 	}
 	ion-card-title {
-		font-size: 1.2em;
+		font-size: 1.1em;
 	}
 </style>
