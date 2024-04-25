@@ -35,6 +35,9 @@ If you are an organization that would like to run their own aliasing server, ple
 - Aliases to forward mail anonymously (& light theme)
 ![alias demo](docs/aliases2.png)
 
+- Webhooks to be notified of email events & message delivery status (New!)
+![webhook demo](docs/webhooks.png)
+
 ## Contributing
 
 Contribution & development setup info can be found [here](./CONTRIBUTING.md)

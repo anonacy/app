@@ -14,7 +14,6 @@
 			</div>
 			<ion-item lines="none" v-if="type == 'domain'">
 				<ion-input
-					slot="start"
 					aria-label="Domain Name"
 					v-model="domainInput"
 					autofocus
@@ -30,6 +29,35 @@
 					fill="outline"
 					:disabled="loading">
 						Add
+				</ion-button>
+			</ion-item>
+
+			<ion-item lines="none" v-if="type == 'webhook'">
+				<ion-input
+					aria-label="Webhook URL"
+					v-model="webhookInput"
+					autofocus
+					:placeholder="`add webhook url...`"
+					@keyup.enter="add"
+					:disabled="loading">
+				</ion-input>
+				<ion-button 
+					slot="end"
+					@click="add()"
+					shape="round"
+					size="small"
+					fill="outline"
+					:disabled="loading">
+						Add
+				</ion-button>
+				<ion-button 
+					slot="end"
+					@click="edit()"
+					shape="round"
+					size="small"
+					fill="outline"
+					:disabled="loading">
+						{{ editing ? 'Done' : 'Edit' }}
 				</ion-button>
 			</ion-item>
 
@@ -119,6 +147,19 @@
 				:index="index">
 			 </EndpointItem>
 		</ion-list>
+
+		<ion-list v-if="!loading && type == 'webhook'">
+			<WebhookItem v-for="(webhook, index) in items"
+				:key="webhook.webhook"
+				:webhook="webhook"
+				:index="index"
+				:editing="editing"
+				@remove="remove"
+				@toggle="toggle">
+			 </WebhookItem>
+			 <WebhookInfo></WebhookInfo>
+		</ion-list>
+
 		
 		<ion-list v-if="!loading && type == 'message'">
 			<MessageItem v-for="(message) in items"
@@ -146,16 +187,20 @@
 	import { refreshOutline, refreshCircle, refreshCircleOutline } from 'ionicons/icons';
 	import { ref, watch, Ref } from 'vue';
 	import { useRouter, useRoute } from 'vue-router';
-	import HttpService from '../services/http'
-	import { isEmail, isDomainName, pluralize, capitalize } from '../services/utils'
+	import HttpService from '../services/http';
+	import { isEmail, isDomainName, isURL, pluralize, capitalize } from '../services/utils';
+	import { error } from '../services/dialog';
 	import DomainItem from './DomainItem.vue';
 	import EndpointItem from './EndpointItem.vue';
 	import AliasItem from './AliasItem.vue';
+	import WebhookItem from './WebhookItem.vue';
+	import WebhookInfo from './WebhookInfo.vue';
 	import MessageItem from './MessageItem.vue';
 
 	const items: Ref<any[]> = ref([]);
 	const domainInput:Ref<string> = ref('');
 	const aliasInput:Ref<string> = ref('');
+	const webhookInput:Ref<string> = ref('');
 	const endpointInput:Ref<string> = ref('');
 	const editing:Ref<boolean> = ref(false);
 	const loading:Ref<boolean> = ref(false);
@@ -169,19 +214,23 @@
 	async function load() {
 		loading.value = true;
 		items.value = (await HttpService.get(`/${pluralize(type.value)}`)).data;
-		console.log("items: ", items.value)
 		loading.value = false;
 	}
 
-	watch(route, async (to, from) => {
-		await load();
-	});
+	// FIXME: wanted /domains to reload when coming back from /domains/:id
+	// watch(route, async (to, from) => {
+	// 	if(from.path.includes('/domains/')) {
+	// 		await load();
+	// 	}
+	// });
 
 	async function add() {
 		if(type.value == 'domain') {
 			await addDomain();
 		} else if(type.value == 'alias') {
 			await addAlias();
+		} else if(type.value == 'webhook') {
+			await addWebhook();
 		}
 	}
 
@@ -200,6 +249,28 @@
 				return;
 			}
 			domainInput.value = '';
+		}catch (e:any) {
+			console.log("e.message: ", e.message);	
+			loadingCtrl.dismiss();	
+		}
+	}
+
+	async function addWebhook() {
+		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});
+		try {
+			webhookInput.value.trim()
+			if(isURL(webhookInput.value)){
+				await loadingCtrl.present();
+				let res:any = await HttpService.post(`/webhook`, { webhook: webhookInput.value });
+				if(res.status == 200) {
+					items.value.unshift(res.data)
+				}
+				loadingCtrl.dismiss();	
+			} else {
+				error("Not a valid URL in the form: https://example.com/webhook")
+				return;
+			}
+			webhookInput.value = '';
 		}catch (e:any) {
 			console.log("e.message: ", e.message);	
 			loadingCtrl.dismiss();	
@@ -252,8 +323,8 @@
 		const loadingCtrl = await loadingController.create({spinner: "dots", duration: 15000});
 		try {
 			await loadingCtrl.present();
-			const body = { alias: items.value[i].alias, enabled: items.value[i].enabled }
-			const res:any = await HttpService.put(`/alias`, body);
+			const body = { [type.value]: items.value[i][type.value], enabled: items.value[i].enabled }
+			const res:any = await HttpService.put(`/${type.value}`, body);
 			if(res.status == 200) {
 				items.value[i].enabled = items.value[i].enabled;
 			}

@@ -28,6 +28,10 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import ('../views/ListPage.vue')
   },
 	{
+    path: '/webhooks',
+    component: () => import ('../views/ListPage.vue')
+  },
+	{
     path: '/messages',
     component: () => import ('../views/ListPage.vue')
   }

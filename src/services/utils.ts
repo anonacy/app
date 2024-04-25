@@ -19,6 +19,15 @@ export function isDomainName(message = ""): boolean {
   return true;
 }
 
+export function isURL(message = ""): boolean {
+  try {
+    new URL(message);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 export function extractSubdomain(domain: string): string {
   const parts = domain.split('.');
   if (parts.length > 2) {

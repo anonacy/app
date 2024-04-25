@@ -1,27 +1,18 @@
 <template>
 	<ion-item
-		:key="props.alias.alias"
+		:key="props.webhook.webhook"
 		lines="none"
 		class="animated fadeIn faster">
 			<ion-toggle 
 				mode="md"
-				aria-label="toggle alias"
-				:checked="props.alias.enabled"
-				v-model="props.alias.enabled"
+				aria-label="toggle webhook"
+				:checked="props.webhook.enabled"
+				v-model="props.webhook.enabled"
 				slot="start"
 				@click="toggle()">
 			</ion-toggle>
 			<ion-label class="no-disable">
-				<h2>{{ props.alias.alias }}</h2>
-				<p>
-					&nbsp;
-					<ion-icon 
-						:ios="props.alias.enabled ? arrowRedo : arrowRedoOutline" 
-						:color="props.alias.enabled ? 'primary' : 'medium'"
-						class="flip-vertically">
-					</ion-icon>
-					&nbsp;{{  props.alias.endpoint }}
-				</p>
+				<h2>{{ props.webhook.webhook }}</h2>
 			</ion-label>
 			<ion-icon 
 				class="animated fadeIn faster" 
@@ -62,7 +53,7 @@
 	import { closeCircle, arrowRedoOutline, arrowRedo } from 'ionicons/icons';
 	import { ref, Ref } from 'vue';
 
-	const props = defineProps(['alias', 'index', 'editing']);
+	const props = defineProps(['webhook', 'index', 'editing']);
 	const emit = defineEmits(['remove', 'toggle']);
 
 	const confirmDelete: Ref<boolean> = ref(false);

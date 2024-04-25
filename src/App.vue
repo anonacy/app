@@ -118,9 +118,13 @@ import {
   mail,
   globeOutline,
   globe,
+  earthOutline,
+  earth,
   flagOutline,
   send,
   sendOutline,
+  analytics,
+  analyticsOutline,
   flag,
   key,
   moon,
@@ -150,8 +154,8 @@ const appPages = [
   {
     title: 'Domains',
     url: '/domains',
-    icon: globeOutline,
-    iconSelected: globe,
+    icon: earthOutline,
+    iconSelected: earth,
     seperator: true
   },
   {
@@ -169,11 +173,18 @@ const appPages = [
     seperator: false
   },
   {
+    title: 'Webhooks',
+    url: '/webhooks',
+    icon: analyticsOutline,
+    iconSelected: analytics,
+    seperator: true
+  },
+  {
     title: 'Messages',
     url: '/messages',
     icon: sendOutline,
     iconSelected: send,
-    seperator: true
+    seperator: false
   },
 ];
 </script>
